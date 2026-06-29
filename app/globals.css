@@ -660,13 +660,6 @@ html[data-theme="dark"] .case-card__visual--image {
       rgba(255, 255, 255, 0.03) 24%,
       transparent 48%
     ),
-    repeating-linear-gradient(
-      116deg,
-      rgba(255, 255, 255, 0.035) 0,
-      rgba(255, 255, 255, 0.035) 1px,
-      transparent 1px,
-      transparent 12px
-    ),
     linear-gradient(
       135deg,
       rgba(34, 34, 34, 0.96),
@@ -3913,18 +3906,7 @@ html[data-theme="dark"] .case-card__visual--image {
   }
 
   .about-flower-note {
-    top: -3px;
-    left: 162px;
-    width: 180px;
-  }
-
-  .about-flower-note p {
-    font-size: 12px;
-  }
-
-  .about-flower-note svg {
-    width: 44px;
-    margin-left: 48px;
+    display: none;
   }
 
   .about-background-card,
@@ -4011,14 +3993,7 @@ html[data-theme="dark"] .case-card__visual--image {
   }
 
   .about-country-callout {
-    top: -24px;
-    left: 178px;
-    font-size: 12px;
-  }
-
-  .about-country-callout svg {
-    width: 36px;
-    margin-left: 12px;
+    display: none;
   }
 
   .about-going-card__divider {
