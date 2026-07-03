@@ -25,7 +25,7 @@ export function Header() {
   return (
     <header className="site-header reveal-on-load reveal-on-load--header">
       <div className="profile-block">
-        <span className="avatar">
+        <Link className="avatar" href="/" aria-label="Go to home page">
           <Image
             src="/avatar-photo.png"
             alt="Lauren Johnson"
@@ -33,7 +33,7 @@ export function Header() {
             height={72}
             priority
           />
-        </span>
+        </Link>
         <span className="profile-text">
           <span className="profile-name">{profile.name}</span>
           <span className="profile-detail block">{profile.title}</span>

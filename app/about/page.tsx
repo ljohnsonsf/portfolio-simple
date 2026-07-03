@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 const timeline = [
   {
     date: "Summer 2026",
-    title: "UX Web Design Intern",
+    title: "UX Design Intern",
     place: "Commvault",
   },
   {
@@ -60,6 +60,30 @@ const values = [
     title: "Aesthetics",
     description:
       "I care about clarity, detail, and experiences that feel polished.",
+  },
+];
+
+const toolkit = [
+  {
+    title: "Design & Prototyping",
+    description:
+      "Figma, FigJam, interactive prototyping, components, Auto Layout, variables, design systems",
+  },
+  {
+    title: "Research & Testing",
+    description: "User interviews, usability testing, surveys, Google Forms",
+  },
+  {
+    title: "Product & Collaboration",
+    description: "Jira, SmartSheet, Trello, Slack",
+  },
+  {
+    title: "AI & Build Tools",
+    description: "Codex, Claude, Cursor, Framer, Webflow, basic HTML/CSS",
+  },
+  {
+    title: "Analytics & Behavior",
+    description: "Google Analytics, Hotjar",
   },
 ];
 
@@ -144,8 +168,9 @@ export default function AboutPage() {
           <p className="about-card__eyebrow">Experience</p>
           <h2 id="about-background">Where I&apos;ve been</h2>
           <p>
-            I&apos;m currently working as an intern at Commvault, focusing on
-            making complex product UI more readable and approachable on the web.
+            Right now, I&apos;m a design intern at Commvault translating complex
+            enterprise product workflows into clearer web visuals that help
+            prospects understand product value capabilities faster.
           </p>
           <p>
             Meanwhile, I&apos;m pursuing my M.S. in Human-Computer Interaction
@@ -205,36 +230,45 @@ export default function AboutPage() {
         </ol>
       </section>
 
-      <section className="about-card about-design-card" aria-labelledby="about-why-design">
-        <div className="about-design-card__art" aria-hidden="true">
-          <p className="about-card__eyebrow">Design journey</p>
-          <Image
-            className="about-orbit"
-            src="/ikigai.svg"
-            alt=""
-            width={231}
-            height={231}
-            unoptimized
-          />
-        </div>
+      <section className="about-card about-design-card" aria-label="Design details">
+        <details className="about-design-journey">
+          <summary className="about-design-card__summary">
+            <span className="about-card__eyebrow">Design Journey</span>
+            <span className="about-toolkit__toggle" aria-hidden="true" />
+          </summary>
 
-        <div className="about-design-card__copy">
-          <h2 id="about-why-design">Why design</h2>
-          <p>
-            While working in tech sales, I became fascinated with the question
-            of why certain product experiences resonated with users and others
-            didn&apos;t. That curiosity led me to begin my pivot into design.
-          </p>
-          <p>
-            Now, design has become my ikigai: the perfect intersection between
-            passion, profession, and personal mission.
-          </p>
-        </div>
+          <div className="about-design-card__content">
+            <div className="about-design-card__art" aria-hidden="true">
+              <Image
+                className="about-orbit"
+                src="/ikigai.svg"
+                alt=""
+                width={231}
+                height={231}
+                unoptimized
+              />
+            </div>
 
-        <div className="about-design-values" aria-labelledby="about-values-title">
-          <p className="about-card__eyebrow" id="about-values-title">
-            Values
-          </p>
+            <div className="about-design-card__copy">
+              <h2 id="about-why-design">Why design?</h2>
+              <p>
+                While working in tech sales, I became fascinated with the question
+                of why certain product experiences resonated with users and others
+                didn&apos;t. That curiosity led me to begin my pivot into design.
+              </p>
+              <p>
+                Now, design has become my ikigai: the perfect intersection between
+                passion, profession, and personal mission.
+              </p>
+            </div>
+          </div>
+        </details>
+
+        <details className="about-design-values about-values-accordion">
+          <summary>
+            <span className="about-card__eyebrow">Values</span>
+            <span className="about-toolkit__toggle" aria-hidden="true" />
+          </summary>
           <div className="about-values__grid">
             {values.map(({ title, description }) => (
               <article className="about-value" key={title}>
@@ -245,7 +279,22 @@ export default function AboutPage() {
               </article>
             ))}
           </div>
-        </div>
+        </details>
+
+        <details className="about-toolkit">
+          <summary>
+            <span className="about-card__eyebrow">Toolkit</span>
+            <span className="about-toolkit__toggle" aria-hidden="true" />
+          </summary>
+          <div className="about-toolkit__content">
+            {toolkit.map(({ title, description }) => (
+              <article className="about-toolkit__item" key={title}>
+                <h3>{title}</h3>
+                <p>{description}</p>
+              </article>
+            ))}
+          </div>
+        </details>
       </section>
 
       <section className="about-card about-going-card" aria-labelledby="about-going-title">
@@ -258,16 +307,12 @@ export default function AboutPage() {
           <div className="about-going-card__column">
             <h3>Professionally</h3>
             <p>
-              I&apos;m currently seeking full-time Product Design or UX Design
-              roles*, New Grad Roles for Winter 2026/Spring 2027, or Internships
-              for Fall/Winter 2026.
-            </p>
-            <p className="about-going-card__footnote">
-              <em>*Wait, aren&apos;t you still in school?</em>
+              I&apos;m currently seeking Product Design and UX Design
+              opportunities, including full-time roles beginning August 2026,
+              New Grad 2027 roles, and Fall/Winter 2026 internships.
               <br />
-              Good question! While my expected graduation date is Spring 2027,
-              I&apos;m more than capable of balancing a full-time role while I
-              wrap up my coursework.
+              <br />
+              I&apos;m completing my MS in HCI through Spring 2027.
             </p>
           </div>
 
@@ -275,20 +320,20 @@ export default function AboutPage() {
 
           <div className="about-going-card__column about-going-card__column--personal">
             <h3>Personally</h3>
+            <span className="about-country-callout" aria-hidden="true">
+              Check em out!
+              <svg
+                viewBox="0 0 57 68"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0.380108 58.6537C-0.0530856 58.9962 -0.126548 59.6251 0.21603 60.0583L5.79864 67.1177C6.14122 67.5509 6.77011 67.6243 7.20331 67.2818C7.6365 66.9392 7.70996 66.3103 7.36738 65.8771L2.40506 59.6021L8.68004 54.6398C9.11324 54.2972 9.1867 53.6683 8.84412 53.2351C8.50155 52.8019 7.87266 52.7285 7.43946 53.071L0.380108 58.6537ZM46.9932 0.328857L46.0488 0.657709C50.6098 13.7559 53.3763 24.3157 54.1454 32.69C54.9149 41.0681 53.6719 47.1094 50.3914 51.3272C47.1145 55.5403 41.6452 58.1379 33.4914 59.2644C25.3373 60.3909 14.644 60.025 1.11642 58.4448L1.0004 59.438L0.884377 60.4313C14.4635 62.0175 25.3572 62.4071 33.7651 61.2456C42.1733 60.084 48.2408 57.3499 51.9701 52.5551C55.6958 47.765 56.9283 41.1221 56.1371 32.507C55.3455 23.8881 52.5151 13.1457 47.9375 6.16227e-06L46.9932 0.328857Z"
+                  fill="currentColor"
+                />
+              </svg>
+            </span>
             <div className="about-going-card__personal-body">
-              <span className="about-country-callout" aria-hidden="true">
-                Check em out!
-                <svg
-                  viewBox="0 0 57 68"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M0.380108 58.6537C-0.0530856 58.9962 -0.126548 59.6251 0.21603 60.0583L5.79864 67.1177C6.14122 67.5509 6.77011 67.6243 7.20331 67.2818C7.6365 66.9392 7.70996 66.3103 7.36738 65.8771L2.40506 59.6021L8.68004 54.6398C9.11324 54.2972 9.1867 53.6683 8.84412 53.2351C8.50155 52.8019 7.87266 52.7285 7.43946 53.071L0.380108 58.6537ZM46.9932 0.328857L46.0488 0.657709C50.6098 13.7559 53.3763 24.3157 54.1454 32.69C54.9149 41.0681 53.6719 47.1094 50.3914 51.3272C47.1145 55.5403 41.6452 58.1379 33.4914 59.2644C25.3373 60.3909 14.644 60.025 1.11642 58.4448L1.0004 59.438L0.884377 60.4313C14.4635 62.0175 25.3572 62.4071 33.7651 61.2456C42.1733 60.084 48.2408 57.3499 51.9701 52.5551C55.6958 47.765 56.9283 41.1221 56.1371 32.507C55.3455 23.8881 52.5151 13.1457 47.9375 6.16227e-06L46.9932 0.328857Z"
-                    fill="currentColor"
-                  />
-                </svg>
-              </span>
               <p>
                 I&apos;ve so far traveled to{" "}
                 <HoverImagePreview

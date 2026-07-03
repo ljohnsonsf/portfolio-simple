@@ -4,5 +4,5 @@ export const profile = {
   education: "M.S Human-Computer Interaction",
   linkedinUrl: "https://www.linkedin.com/in/ljohnsonsf/",
   resumeUrl:
-    "https://drive.google.com/file/d/1JgieOQeiYoHOI0SpY1NUaM_MDdRBrOrq/view?usp=sharing",
+    "https://drive.google.com/file/d/1dhnG0LKkVfrhtLmrD6RaaZwJhrLqvK9j/view?usp=sharing",
 };
