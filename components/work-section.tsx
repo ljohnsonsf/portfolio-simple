@@ -23,7 +23,11 @@ export function WorkSection({ caseStudies }: WorkSectionProps) {
       <h1 className="sr-only" id="work-heading">
         Selected work
       </h1>
-      <div className="work-tabs" role="tablist" aria-label="Work categories">
+      <div
+        className={`work-tabs work-tabs--${activeTab}`}
+        role="tablist"
+        aria-label="Work categories"
+      >
         <button
           className="tab-button"
           id="case-studies-tab"
@@ -50,7 +54,7 @@ export function WorkSection({ caseStudies }: WorkSectionProps) {
 
       {activeTab === "case-studies" ? (
         <div
-          className="case-list"
+          className="case-list tab-panel-reveal"
           id="case-studies-panel"
           role="tabpanel"
           aria-labelledby="case-studies-tab"

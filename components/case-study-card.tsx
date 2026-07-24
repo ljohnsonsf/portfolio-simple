@@ -4,12 +4,6 @@ import { useCallback, useEffect, useRef } from "react";
 import type { PointerEvent } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  BriefcaseBusiness,
-  Lightbulb,
-  LayoutGrid,
-  UsersRound,
-} from "lucide-react";
 import type { CaseStudy } from "@/lib/case-studies";
 import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
 
@@ -22,6 +16,21 @@ const TILT_EASE = 0.14;
 const TILT_SETTLE_THRESHOLD = 0.01;
 const ACTIVE_GLINT_OPACITY = "0.62";
 
+const previewVideos: Record<
+  string,
+  {
+    src: string;
+    playbackRate?: number;
+  }
+> = {
+  "learvo-learning": {
+    src: "/case-studies/learvo/learvo-homepage-short.mp4",
+  },
+  "aws-beginner-mode": {
+    src: "/case-studies/aws/final-feature-walkthrough.mp4",
+  },
+};
+
 type TiltState = {
   targetX: number;
   targetY: number;
@@ -32,6 +41,10 @@ type TiltState = {
 };
 
 export function CaseStudyCard({ study }: CaseStudyCardProps) {
+  const displayTags = study.tags.slice(0, 3);
+  const isLearvoHomeCard = study.slug === "learvo-learning";
+  const displayTitle =
+    isLearvoHomeCard ? "Improving Onboarding at Learvo" : study.title;
   const reduceMotion = usePrefersReducedMotion();
   const tiltState = useRef<TiltState>({
     targetX: 0,
@@ -43,6 +56,8 @@ export function CaseStudyCard({ study }: CaseStudyCardProps) {
   });
   const usesScreenshotFormat =
     study.slug === "learvo-learning" || study.slug === "aws-beginner-mode";
+  const previewVideo = previewVideos[study.slug];
+  const usesPreviewVideo = Boolean(previewVideo);
 
   const applyTilt = useCallback((card: HTMLElement, rotateX: number, rotateY: number) => {
     const tiltTransform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
@@ -187,6 +202,48 @@ export function CaseStudyCard({ study }: CaseStudyCardProps) {
     [handlePointerLeave],
   );
 
+  const visual = (
+    <div
+      className={`case-card__visual ${
+        usesScreenshotFormat ? "case-card__visual--image" : ""
+      } ${usesPreviewVideo ? "case-card__visual--video" : ""} ${
+        study.slug === "learvo-learning"
+          ? "case-card__visual--learvo-preview"
+          : ""
+      } ${
+        study.slug === "aws-beginner-mode"
+          ? "case-card__visual--aws-preview"
+          : ""
+      }`}
+      aria-hidden="true"
+    >
+      {previewVideo ? (
+        <video
+          className="case-card__video"
+          src={previewVideo.src}
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="metadata"
+          onLoadedMetadata={(event) => {
+            if (previewVideo.playbackRate) {
+              event.currentTarget.playbackRate = previewVideo.playbackRate;
+            }
+          }}
+        />
+      ) : (
+        <Image
+          src={study.previewImage}
+          alt=""
+          width={632}
+          height={414}
+          sizes="(max-width: 900px) 100vw, 632px"
+        />
+      )}
+    </div>
+  );
+
   return (
     <Link
       className="case-card-link case-study-card-wrapper"
@@ -199,69 +256,114 @@ export function CaseStudyCard({ study }: CaseStudyCardProps) {
       <article
         className={`case-card case-study-card ${
           usesScreenshotFormat ? "case-card--screenshot" : ""
+        } ${usesPreviewVideo ? "case-card--video-stack" : ""} ${
+          study.slug === "learvo-learning" ? "case-card--learvo-home-card" : ""
         }`}
       >
-        <div className="case-card__copy">
-          <div className="case-card__number">{study.number}</div>
-          <h2 className="case-card__title">{study.title}</h2>
-          <p className="case-card__description">{study.description}</p>
-
-          <div className="case-card__rule" aria-hidden="true" />
-          <div
-            className="case-card__metric"
-            aria-label={`${study.metricValue} ${study.metricText}`}
-          >
-            <span className="case-card__metric-value">{study.metricValue}</span>
-            <span className="case-card__metric-text">{study.metricText}</span>
-          </div>
-          <div className="case-card__rule" aria-hidden="true" />
-
-          <div className="case-card__meta" aria-label="Project metadata">
-            <div className="case-card__meta-row">
-              <LayoutGrid aria-hidden="true" size={14} strokeWidth={1.8} />
-              <span>{study.tags.join(" · ")}</span>
-            </div>
-            <div className="case-card__meta-row">
-              <UsersRound aria-hidden="true" size={14} strokeWidth={1.8} />
-              <span>{study.meta}</span>
-            </div>
-            {study.roleMeta ? (
-              <div className="case-card__meta-row">
-                <Lightbulb aria-hidden="true" size={14} strokeWidth={1.8} />
-                <span>{study.roleMeta}</span>
+        {usesPreviewVideo ? (
+          <>
+            <div className="case-card__feature-copy">
+              <div className="case-card__intro">
+                <h2
+                  className={`case-card__title case-card__title--case-study ${
+                    isLearvoHomeCard ? "case-card__title--learvo-home" : ""
+                  }`}
+                >
+                  {isLearvoHomeCard ? (
+                    <>
+                      <span className="case-card__title-line">
+                        Improving Onboarding
+                      </span>
+                      <span className="case-card__title-line">at Learvo</span>
+                    </>
+                  ) : (
+                    displayTitle
+                  )}
+                </h2>
+                <p className="case-card__description">{study.description}</p>
               </div>
-            ) : null}
-            {study.projectTypeMeta ? (
-              <div className="case-card__meta-row">
-                <BriefcaseBusiness
-                  aria-hidden="true"
-                  size={14}
-                  strokeWidth={1.8}
-                />
-                <span>{study.projectTypeMeta}</span>
+
+              <div
+                className="case-card__metric"
+                aria-label={`${study.metricValue} ${study.metricText}`}
+              >
+                <span className="case-card__metric-value">
+                  {study.metricValue}
+                </span>
+                <span className="case-card__metric-text">
+                  {study.metricText}
+                </span>
               </div>
-            ) : null}
-          </div>
 
-          <span className="primary-button case-card__cta">
-            <span>View Case Study</span>
-          </span>
-        </div>
+              <div className="case-card__details">
+                <ul className="case-card__tags" aria-label="Project keywords">
+                  {displayTags.map((tag) => (
+                    <li
+                      className={`case-card__tag ${
+                        study.slug === "aws-beginner-mode" &&
+                        tag === "Design Systems"
+                          ? "case-card__tag--aws-design-systems"
+                          : ""
+                      }`}
+                      key={tag}
+                    >
+                      <span className="case-card__tag-dot" aria-hidden="true" />
+                      <span>{tag}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
 
-        <div
-          className={`case-card__visual ${
-            usesScreenshotFormat ? "case-card__visual--image" : ""
-          }`}
-          aria-hidden="true"
-        >
-          <Image
-            src={study.previewImage}
-            alt=""
-            width={632}
-            height={414}
-            sizes="(max-width: 900px) 100vw, 632px"
-          />
-        </div>
+            {visual}
+          </>
+        ) : (
+          <>
+            <div className="case-card__copy">
+              <h2 className="case-card__title case-card__title--case-study">
+                {displayTitle}
+              </h2>
+              <p className="case-card__description">{study.description}</p>
+
+              <div className="case-card__rule" aria-hidden="true" />
+              <div
+                className="case-card__metric"
+                aria-label={`${study.metricValue} ${study.metricText}`}
+              >
+                <span className="case-card__metric-value">
+                  {study.metricValue}
+                </span>
+                <span className="case-card__metric-text">
+                  {study.metricText}
+                </span>
+              </div>
+              <div className="case-card__rule" aria-hidden="true" />
+
+              <ul className="case-card__tags" aria-label="Project keywords">
+                {displayTags.map((tag) => (
+                    <li
+                      className={`case-card__tag ${
+                        study.slug === "aws-beginner-mode" &&
+                        tag === "Design Systems"
+                          ? "case-card__tag--aws-design-systems"
+                          : ""
+                      }`}
+                      key={tag}
+                    >
+                    <span className="case-card__tag-dot" aria-hidden="true" />
+                    <span>{tag}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <span className="primary-button case-card__cta">
+                <span>View Case Study</span>
+              </span>
+            </div>
+
+            {visual}
+          </>
+        )}
       </article>
     </Link>
   );

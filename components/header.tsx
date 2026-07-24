@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 import { profile } from "@/lib/profile";
 
 const navLinks = [
@@ -10,6 +11,104 @@ const navLinks = [
   { href: "/about", label: "About", match: "about" },
   { href: profile.resumeUrl, label: "Resume", match: "resume" },
 ];
+
+const typewriterPhrases = [
+  "Product Designer",
+  "UX Designer",
+  "M.S Human-Computer Interaction",
+];
+
+const typewriterTiming = {
+  hold: 2000,
+  type: 80,
+  delete: 50,
+  longDelete: 34,
+};
+
+function usePrefersReducedMotion() {
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+
+  useEffect(() => {
+    const query = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    setPrefersReducedMotion(query.matches);
+
+    const handleChange = () => {
+      setPrefersReducedMotion(query.matches);
+    };
+
+    query.addEventListener("change", handleChange);
+
+    return () => {
+      query.removeEventListener("change", handleChange);
+    };
+  }, []);
+
+  return prefersReducedMotion;
+}
+
+function TypewriterDetail() {
+  const prefersReducedMotion = usePrefersReducedMotion();
+  const [phraseIndex, setPhraseIndex] = useState(0);
+  const [visibleText, setVisibleText] = useState(typewriterPhrases[0]);
+  const [phase, setPhase] = useState<"holding" | "typing" | "deleting">(
+    "holding",
+  );
+
+  useEffect(() => {
+    if (prefersReducedMotion) {
+      setVisibleText(typewriterPhrases[0]);
+      setPhraseIndex(0);
+      setPhase("holding");
+      return;
+    }
+
+    const currentPhrase = typewriterPhrases[phraseIndex];
+    let timeout = typewriterTiming.hold;
+
+    if (phase === "holding") {
+      timeout = window.setTimeout(
+        () => setPhase("deleting"),
+        typewriterTiming.hold,
+      );
+    } else if (phase === "deleting") {
+      const deleteSpeed =
+        currentPhrase === "M.S Human-Computer Interaction"
+          ? typewriterTiming.longDelete
+          : typewriterTiming.delete;
+
+      timeout = window.setTimeout(() => {
+        if (visibleText.length > 0) {
+          setVisibleText((text) => text.slice(0, -1));
+          return;
+        }
+
+        setPhraseIndex((index) => (index + 1) % typewriterPhrases.length);
+        setPhase("typing");
+      }, deleteSpeed);
+    } else if (phase === "typing") {
+      timeout = window.setTimeout(() => {
+        if (visibleText.length < currentPhrase.length) {
+          setVisibleText(currentPhrase.slice(0, visibleText.length + 1));
+          return;
+        }
+
+        setPhase("holding");
+      }, typewriterTiming.type);
+    }
+
+    return () => {
+      window.clearTimeout(timeout);
+    };
+  }, [phase, phraseIndex, prefersReducedMotion, visibleText]);
+
+  return (
+    <span className="profile-detail profile-typewriter">
+      <span className="profile-typewriter__text">{visibleText}</span>
+      <span className="profile-typewriter__cursor" aria-hidden="true" />
+    </span>
+  );
+}
 
 export function Header() {
   const pathname = usePathname();
@@ -36,8 +135,7 @@ export function Header() {
         </Link>
         <span className="profile-text">
           <span className="profile-name">{profile.name}</span>
-          <span className="profile-detail block">{profile.title}</span>
-          <span className="profile-detail block">{profile.education}</span>
+          <TypewriterDetail />
         </span>
       </div>
 
