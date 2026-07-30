@@ -1049,7 +1049,6 @@ export function CommvaultCaseStudyPage({
                 description={card.description}
                 key={card.title}
                 title={card.title}
-                value={card.value}
               />
             ))}
           </div>
