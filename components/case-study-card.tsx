@@ -29,6 +29,10 @@ const previewVideos: Record<
   "aws-beginner-mode": {
     src: "/case-studies/aws/final-feature-walkthrough.mp4",
   },
+  "commvault-visual-system": {
+    src: "/case-studies/commvault/scalable-visual-system.mp4",
+    playbackRate: 1.5,
+  },
 };
 
 type TiltState = {
@@ -43,8 +47,10 @@ type TiltState = {
 export function CaseStudyCard({ study }: CaseStudyCardProps) {
   const displayTags = study.tags.slice(0, 3);
   const isLearvoHomeCard = study.slug === "learvo-learning";
+  const isCommvaultHomeCard = study.slug === "commvault-visual-system";
+  const isAwsHomeCard = study.slug === "aws-beginner-mode";
   const displayTitle =
-    isLearvoHomeCard ? "Improving Onboarding at Learvo" : study.title;
+    isLearvoHomeCard ? "Driving New User Activation" : study.title;
   const reduceMotion = usePrefersReducedMotion();
   const tiltState = useRef<TiltState>({
     targetX: 0,
@@ -55,9 +61,13 @@ export function CaseStudyCard({ study }: CaseStudyCardProps) {
     frameId: null,
   });
   const usesScreenshotFormat =
-    study.slug === "learvo-learning" || study.slug === "aws-beginner-mode";
+    study.slug === "learvo-learning" ||
+    study.slug === "aws-beginner-mode" ||
+    isCommvaultHomeCard;
   const previewVideo = previewVideos[study.slug];
   const usesPreviewVideo = Boolean(previewVideo);
+  const usesFeatureCardLayout = usesPreviewVideo || isCommvaultHomeCard;
+  const hasPreviewImage = Boolean(study.previewImage);
 
   const applyTilt = useCallback((card: HTMLElement, rotateX: number, rotateY: number) => {
     const tiltTransform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
@@ -214,6 +224,10 @@ export function CaseStudyCard({ study }: CaseStudyCardProps) {
         study.slug === "aws-beginner-mode"
           ? "case-card__visual--aws-preview"
           : ""
+      } ${
+        isCommvaultHomeCard ? "case-card__visual--commvault-preview" : ""
+      } ${
+        !previewVideo && !hasPreviewImage ? "case-card__visual--placeholder" : ""
       }`}
       aria-hidden="true"
     >
@@ -232,7 +246,7 @@ export function CaseStudyCard({ study }: CaseStudyCardProps) {
             }
           }}
         />
-      ) : (
+      ) : hasPreviewImage ? (
         <Image
           src={study.previewImage}
           alt=""
@@ -240,6 +254,10 @@ export function CaseStudyCard({ study }: CaseStudyCardProps) {
           height={414}
           sizes="(max-width: 900px) 100vw, 632px"
         />
+      ) : (
+        <div className="case-card__visual-placeholder">
+          <span>Project visual placeholder</span>
+        </div>
       )}
     </div>
   );
@@ -256,29 +274,44 @@ export function CaseStudyCard({ study }: CaseStudyCardProps) {
       <article
         className={`case-card case-study-card ${
           usesScreenshotFormat ? "case-card--screenshot" : ""
-        } ${usesPreviewVideo ? "case-card--video-stack" : ""} ${
+        } ${usesFeatureCardLayout ? "case-card--video-stack" : ""} ${
           study.slug === "learvo-learning" ? "case-card--learvo-home-card" : ""
+        } ${
+          isCommvaultHomeCard ? "case-card--commvault-home-card" : ""
+        } ${
+          isAwsHomeCard ? "case-card--aws-home-card" : ""
         }`}
       >
-        {usesPreviewVideo ? (
+        {usesFeatureCardLayout ? (
           <>
             <div className="case-card__feature-copy">
               <div className="case-card__intro">
+                {isCommvaultHomeCard ? (
+                  <Image
+                    className="case-card__logo case-card__logo--commvault"
+                    src="/previews/commvault-logo.png"
+                    alt=""
+                    width={1552}
+                    height={300}
+                    aria-hidden="true"
+                  />
+                ) : null}
+                {isLearvoHomeCard ? (
+                  <Image
+                    className="case-card__logo case-card__logo--learvo"
+                    src="/previews/learvo-logo.png"
+                    alt=""
+                    width={1600}
+                    height={230}
+                    aria-hidden="true"
+                  />
+                ) : null}
                 <h2
                   className={`case-card__title case-card__title--case-study ${
                     isLearvoHomeCard ? "case-card__title--learvo-home" : ""
                   }`}
                 >
-                  {isLearvoHomeCard ? (
-                    <>
-                      <span className="case-card__title-line">
-                        Improving Onboarding
-                      </span>
-                      <span className="case-card__title-line">at Learvo</span>
-                    </>
-                  ) : (
-                    displayTitle
-                  )}
+                  {displayTitle}
                 </h2>
                 <p className="case-card__description">{study.description}</p>
               </div>

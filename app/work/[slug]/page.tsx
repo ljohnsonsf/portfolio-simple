@@ -5,6 +5,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { AwsCaseStudyPage } from "@/components/aws-case-study-page";
+import { CommvaultCaseStudyPage } from "@/components/commvault-case-study-page";
 import {
   CaseStudyBody,
   CaseStudyHero,
@@ -158,11 +159,18 @@ export default async function CaseStudyPage({
     return (
       <CaseStudyPageShell links={sectionLinks}>
         <CaseStudyHero
-          title="Improving First Session Activation at Learvo Learning"
+          title="Driving First Session Activation at Learvo Learning"
           copy={[
             "Learvo is an AI-powered learning platform with flashcards, mnemonics, and quizzes.",
             "I redesigned the first-time user experience to help new users understand the product's value and successfully try a core feature in their first session.",
           ]}
+          logo={{
+            src: "/previews/learvo-logo.png",
+            alt: "Learvo Learning",
+            width: 1600,
+            height: 230,
+            className: "case-study-hero__logo--learvo",
+          }}
           image={{
             src: study.previewImage,
             alt: "Learvo Learning flashcards dashboard interface",
@@ -336,6 +344,10 @@ export default async function CaseStudyPage({
 
   if (study.slug === "aws-beginner-mode") {
     return <AwsCaseStudyPage study={study} />;
+  }
+
+  if (study.slug === "commvault-visual-system") {
+    return <CommvaultCaseStudyPage study={study} />;
   }
 
   return (

@@ -18,9 +18,30 @@ export type CaseStudy = {
 
 export const caseStudies: CaseStudy[] = [
   {
+    slug: "commvault-visual-system",
+    number: "03",
+    title: "Designing for Clarity at Scale",
+    description:
+      "I designed a scalable system that helps users understand Commvault's complex product capabilities faster while making web content easier to maintain as the product evolves.",
+    metricValue: "25%",
+    metricText: "increase in product comprehension.",
+    tags: ["Visual Systems", "UX Design", "Enterprise UX"],
+    meta: "Timeline TBD · Team TBD",
+    roleMeta: "Role: UX Design Intern",
+    projectTypeMeta: "Project Type: Internship",
+    href: "/work/commvault-visual-system",
+    previewImage: "",
+    summary:
+      "This case study will document how scalable visual systems can make dense enterprise product workflows clearer, more reusable, and easier for prospects to understand.",
+    role:
+      "Defined visual system foundations, translated complex product workflows into clearer web visuals, and prepared reusable patterns for future enterprise storytelling.",
+    outcome:
+      "Outcome details will be added as the Commvault case study is developed.",
+  },
+  {
     slug: "learvo-learning",
     number: "01",
-    title: "Learvo Learning",
+    title: "Driving New User Activation",
     description:
       "Redesigned the new user experience to help users discover core features and reach value faster.",
     metricValue: "88%",

@@ -34,9 +34,18 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/fonts/JetBrainsMono-Regular.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
 :root {
   color-scheme: light;
-  --font-primary: "Spot Mono", "SFMono-Regular", "Roboto Mono", "IBM Plex Mono";
+  --font-primary: "JetBrains Mono", ui-monospace, monospace;
+  --font-primary-weight: 400;
   --font-secondary: "Inter";
   --font-inter: var(--font-secondary);
   --background: #f2f2f2;
@@ -196,6 +205,7 @@ body::after {
     var(--font-secondary),
     ui-monospace,
     monospace;
+  font-weight: var(--font-primary-weight);
 }
 
 button,
@@ -512,7 +522,7 @@ html[data-theme="dark"] .case-card__visual--image {
   position: relative;
   color: var(--secondary);
   font-size: 15px;
-  font-weight: 400;
+  font-weight: var(--font-primary-weight);
   line-height: 1.1;
   transition: color 220ms ease;
 }
@@ -899,7 +909,8 @@ html[data-theme="dark"] .case-card__visual--image {
   padding: var(--card-pad);
 }
 
-.case-card--learvo-home-card {
+.case-card--learvo-home-card,
+.case-card--commvault-home-card {
   grid-template-columns: minmax(292px, 300px) minmax(0, 1fr);
   gap: 32px;
   padding-inline: 42px;
@@ -907,6 +918,26 @@ html[data-theme="dark"] .case-card__visual--image {
 
 .case-card__title-line {
   display: block;
+}
+
+.case-card__logo {
+  display: block;
+  height: auto;
+  margin: 0 0 18px;
+}
+
+.case-card__logo--commvault {
+  width: min(156px, 52%);
+}
+
+.case-card__logo--learvo {
+  width: min(174px, 58%);
+}
+
+html[data-theme="dark"] .case-card__logo--commvault,
+html[data-theme="dark"] .case-card__logo--learvo {
+  filter: brightness(0) invert(1);
+  opacity: 0.92;
 }
 
 .case-card__title--learvo-home .case-card__title-line {
@@ -978,10 +1009,10 @@ html[data-theme="dark"] .case-card__visual--image {
 
 .case-card__title--case-study {
   font-family:
-    var(--font-primary),
     var(--font-secondary),
-    ui-monospace,
-    monospace;
+    Inter,
+    system-ui,
+    sans-serif;
   font-weight: 400;
 }
 
@@ -1117,6 +1148,100 @@ html[data-theme="dark"] .case-card__visual--image {
   background: #9fd6ff;
 }
 
+:is(
+  .case-card--learvo-home-card,
+  .case-card--commvault-home-card,
+  .case-card--aws-home-card
+) .case-card__metric {
+  align-items: center;
+  gap: 16px;
+  border: 1px solid var(--border-soft);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.18);
+  padding: 12px 14px;
+}
+
+:is(
+  .case-card--learvo-home-card,
+  .case-card--commvault-home-card,
+  .case-card--aws-home-card
+) .case-card__metric-value {
+  flex: 0 0 auto;
+  border-right: 1px solid var(--border-soft);
+  color: var(--status);
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 0.96;
+  padding-right: 16px;
+}
+
+:is(
+  .case-card--learvo-home-card,
+  .case-card--commvault-home-card,
+  .case-card--aws-home-card
+) .case-card__metric-text {
+  flex: 1 1 auto;
+  color: var(--primary);
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.18;
+}
+
+:is(
+  .case-card--learvo-home-card,
+  .case-card--commvault-home-card,
+  .case-card--aws-home-card
+) .case-card__tags {
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+:is(
+  .case-card--learvo-home-card,
+  .case-card--commvault-home-card,
+  .case-card--aws-home-card
+) .case-card__tag {
+  display: inline-flex;
+  min-height: 24px;
+  align-items: center;
+  gap: 7px;
+  border-color: var(--border-soft);
+  background: rgba(255, 255, 255, 0.08);
+  font-size: 10px;
+  font-weight: 500;
+  padding: 0 9px;
+}
+
+:is(
+  .case-card--learvo-home-card,
+  .case-card--commvault-home-card,
+  .case-card--aws-home-card
+) .case-card__tag-dot {
+  height: 6px;
+  width: 6px;
+}
+
+[data-theme="dark"]
+  :is(
+    .case-card--learvo-home-card,
+    .case-card--commvault-home-card,
+    .case-card--aws-home-card
+  )
+  .case-card__metric {
+  border-color: var(--border-soft);
+  background: rgba(255, 255, 255, 0.035);
+}
+
+[data-theme="dark"]
+  :is(
+    .case-card--learvo-home-card,
+    .case-card--commvault-home-card,
+    .case-card--aws-home-card
+  )
+  .case-card__tag {
+  background: rgba(255, 255, 255, 0.025);
+}
+
 .primary-button {
   position: relative;
   display: inline-flex;
@@ -1241,10 +1366,10 @@ html[data-theme="dark"] .case-card__visual--image {
 
 .other-work-card__title {
   font-family:
-    var(--font-primary),
     var(--font-secondary),
-    ui-monospace,
-    monospace;
+    Inter,
+    system-ui,
+    sans-serif;
   font-weight: 400;
   margin-bottom: 18px;
   font-size: 29px;
@@ -1344,6 +1469,40 @@ html[data-theme="dark"] .case-card__visual--image {
   aspect-ratio: 2508 / 1540;
 }
 
+.case-card__visual--commvault-preview {
+  aspect-ratio: 2438 / 1524;
+}
+
+.case-card__visual--placeholder {
+  display: grid;
+  place-items: center;
+  border-color: var(--border-soft);
+  background:
+    radial-gradient(
+      circle at 22% 18%,
+      rgba(255, 255, 255, 0.7),
+      transparent 40%
+    ),
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.46),
+      rgba(226, 228, 231, 0.3) 52%,
+      rgba(255, 255, 255, 0.34)
+    ),
+    var(--surface-muted);
+}
+
+.case-card__visual-placeholder {
+  display: grid;
+  height: 100%;
+  width: 100%;
+  place-items: center;
+  color: var(--secondary);
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
 .case-card__visual img,
 .case-card__video,
 .detail-hero img {
@@ -1374,6 +1533,12 @@ html[data-theme="dark"] .case-card__visual--image {
   background: #eef5fd;
   display: block;
   object-fit: cover;
+}
+
+.case-card__visual--commvault-preview .case-card__video {
+  background: transparent;
+  object-fit: contain;
+  object-position: center;
 }
 
 .case-card:hover .case-card__visual img {
@@ -1633,6 +1798,20 @@ html[data-theme="dark"] .case-card__visual--image {
   min-width: 0;
 }
 
+.case-study-hero__logo {
+  display: block;
+  height: auto;
+  width: min(150px, 44%);
+  margin: 0 0 22px;
+  opacity: 0.72;
+}
+
+html[data-theme="dark"] .case-study-hero__logo--commvault,
+html[data-theme="dark"] .case-study-hero__logo--learvo {
+  filter: brightness(0) invert(1);
+  opacity: 0.82;
+}
+
 .case-study-section__number {
   margin: 0;
   color: var(--secondary);
@@ -1692,6 +1871,20 @@ html[data-theme="dark"] .case-card__visual--image {
   display: block;
   height: auto;
   width: 100%;
+}
+
+.case-study-hero__placeholder {
+  display: grid;
+  min-height: clamp(280px, 32vw, 440px);
+  aspect-ratio: 1104 / 784;
+  place-items: center;
+}
+
+.case-study-hero__placeholder::after {
+  color: var(--secondary);
+  font-size: 12px;
+  font-weight: 400;
+  content: "Project visual placeholder";
 }
 
 .case-study-meta-bar {
@@ -2022,6 +2215,16 @@ html[data-theme="dark"] .case-card__visual--image {
   font-weight: 400;
   line-height: 1.42;
   padding: 18px 20px 18px 42px;
+}
+
+.case-study-findings li strong,
+.case-study-findings li span {
+  display: block;
+}
+
+.case-study-findings li strong {
+  margin-bottom: 8px;
+  font-weight: 500;
 }
 
 .case-study-findings li::before {
@@ -3453,7 +3656,7 @@ html[data-theme="dark"] .case-card__visual--image {
     var(--font-secondary),
     ui-monospace,
     monospace;
-  font-weight: 400;
+  font-weight: var(--font-primary-weight);
 }
 
 .about-hero p {
@@ -4182,6 +4385,10 @@ html[data-theme="dark"] .case-card__visual--image {
 
   .case-card:not(.other-work-card) .case-card__visual--aws-preview {
     aspect-ratio: 2508 / 1540;
+  }
+
+  .case-card:not(.other-work-card) .case-card__visual--commvault-preview {
+    aspect-ratio: 2438 / 1524;
   }
 
   .case-card--video-stack .case-card__visual {

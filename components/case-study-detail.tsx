@@ -7,24 +7,32 @@ import { PageReveal } from "@/components/page-reveal";
 type CaseStudyHeroProps = {
   title: string;
   copy: string[];
-  image: {
+  logo?: {
+    src: string;
+    alt: string;
+    width: number;
+    height: number;
+    className?: string;
+  };
+  image?: {
     src: string;
     alt: string;
     width: number;
     height: number;
   };
+  placeholderLabel?: string;
   children?: ReactNode;
 };
 
 type CaseStudyMetaItem = {
   label: string;
-  value: string;
+  value: ReactNode;
   note?: string;
 };
 
 type CaseStudySectionProps = {
   id: string;
-  number: string;
+  number: ReactNode;
   title: string;
   copy: string;
   className?: string;
@@ -33,7 +41,7 @@ type CaseStudySectionProps = {
 
 type CaseStudySummaryCardProps = {
   title: string;
-  description: string;
+  description: ReactNode;
   icon?: LucideIcon;
   value?: string;
 };
@@ -105,13 +113,27 @@ export function CaseStudyBody({ children }: CaseStudyBodyProps) {
 export function CaseStudyHero({
   title,
   copy,
+  logo,
   image,
+  placeholderLabel = "Project media placeholder",
   children,
 }: CaseStudyHeroProps) {
   return (
     <header className="case-study-hero-wrap">
       <section className="case-study-hero" aria-labelledby="case-study-title">
         <div className="case-study-hero__copy">
+          {logo ? (
+            <Image
+              className={["case-study-hero__logo", logo.className]
+                .filter(Boolean)
+                .join(" ")}
+              src={logo.src}
+              alt={logo.alt}
+              width={logo.width}
+              height={logo.height}
+              sizes="(max-width: 640px) 128px, 150px"
+            />
+          ) : null}
           <h1 id="case-study-title">{title}</h1>
           {copy.map((paragraph) => (
             <p key={paragraph}>{paragraph}</p>
@@ -125,13 +147,20 @@ export function CaseStudyHero({
         </div>
 
         <div className="case-study-hero__media">
-          <Image
-            src={image.src}
-            alt={image.alt}
-            width={image.width}
-            height={image.height}
-            priority
-          />
+          {image ? (
+            <Image
+              src={image.src}
+              alt={image.alt}
+              width={image.width}
+              height={image.height}
+              priority
+            />
+          ) : (
+            <div
+              className="case-study-hero__placeholder"
+              aria-label={placeholderLabel}
+            />
+          )}
         </div>
       </section>
     </header>
