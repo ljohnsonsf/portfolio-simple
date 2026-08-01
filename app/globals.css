@@ -4332,6 +4332,24 @@ html[data-theme="dark"] .case-study-hero__logo--learvo {
     padding: var(--card-pad);
   }
 
+  .case-card:not(.other-work-card).case-card--video-stack .case-card__feature-copy {
+    display: contents;
+  }
+
+  .case-card:not(.other-work-card).case-card--video-stack .case-card__intro {
+    order: 0;
+  }
+
+  .case-card:not(.other-work-card).case-card--video-stack .case-card__metric {
+    order: 2;
+    margin-top: 0;
+  }
+
+  .case-card:not(.other-work-card).case-card--video-stack .case-card__details {
+    order: 3;
+    margin-top: 0;
+  }
+
   .case-card__copy {
     min-height: 0;
   }
@@ -4647,6 +4665,10 @@ html[data-theme="dark"] .case-study-hero__logo--learvo {
 
   .about-going-card__personal-body {
     margin-top: 0;
+  }
+
+  .about-going-card__column p.about-travel-feature__hint {
+    display: none;
   }
 
   .about-going-card__divider {

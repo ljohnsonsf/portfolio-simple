@@ -319,6 +319,7 @@ function CapabilityIdentificationChart(): ReactElement {
 
   return (
     <div
+      className="commvault-capability-chart"
       aria-label="Correct product capability identification: stylized UI 67 percent, existing screenshots 53 percent."
       role="img"
       style={{
@@ -343,6 +344,7 @@ function CapabilityIdentificationChart(): ReactElement {
       <div style={{ display: "grid", gap: "14px" }}>
         {bars.map((bar) => (
           <div
+            className="commvault-capability-chart__row"
             key={bar.label}
             style={{
               display: "grid",
@@ -352,6 +354,7 @@ function CapabilityIdentificationChart(): ReactElement {
             }}
           >
             <span
+              className="commvault-capability-chart__label"
               style={{
                 color: "var(--primary)",
                 fontSize: "12px",
@@ -362,6 +365,7 @@ function CapabilityIdentificationChart(): ReactElement {
               {bar.label}
             </span>
             <span
+              className="commvault-capability-chart__bar"
               style={{
                 display: "block",
                 overflow: "hidden",
@@ -385,6 +389,7 @@ function CapabilityIdentificationChart(): ReactElement {
               />
             </span>
             <strong
+              className="commvault-capability-chart__value"
               style={{
                 color: "var(--primary)",
                 fontSize: "13px",
@@ -691,6 +696,25 @@ export function CommvaultCaseStudyPage({
           .case-study-guided-row .commvault-validation-callout {
             font-size: 17px;
             line-height: 1.18;
+          }
+
+          @media (max-width: 640px) {
+            .commvault-capability-chart__row {
+              grid-template-columns: minmax(0, 1fr) auto !important;
+              gap: 8px 12px !important;
+            }
+
+            .commvault-capability-chart__label {
+              grid-column: 1 / -1;
+            }
+
+            .commvault-capability-chart__bar {
+              grid-column: 1;
+            }
+
+            .commvault-capability-chart__value {
+              grid-column: 2;
+            }
           }
 
           .commvault-product-story-carousel {
