@@ -35,8 +35,8 @@
 }
 
 @font-face {
-  font-family: "JetBrains Mono";
-  src: url("/fonts/JetBrainsMono-Regular.woff2") format("woff2");
+  font-family: "Spot Mono";
+  src: url("/fonts/SpotMono-Regular.ttf") format("truetype");
   font-style: normal;
   font-weight: 400;
   font-display: swap;
@@ -44,7 +44,7 @@
 
 :root {
   color-scheme: light;
-  --font-primary: "JetBrains Mono", ui-monospace, monospace;
+  --font-primary: "Spot Mono", ui-monospace, monospace;
   --font-primary-weight: 400;
   --font-secondary: "Inter";
   --font-inter: var(--font-secondary);
@@ -4174,18 +4174,18 @@ html[data-theme="dark"] .case-study-hero__logo--learvo {
 
 .about-going-card__column--personal {
   position: relative;
-  min-height: 220px;
-}
-
-.about-going-card__column--personal h3 {
-  position: static;
+  min-height: 240px;
+  justify-items: center;
 }
 
 .about-going-card__personal-body {
   position: static;
   display: grid;
-  gap: 20px;
+  width: min(100%, 430px);
+  justify-items: center;
+  gap: 10px;
   margin-top: 0;
+  text-align: center;
 }
 
 .about-going-card__column p {
@@ -4212,32 +4212,44 @@ html[data-theme="dark"] .case-study-hero__logo--learvo {
   font-style: italic;
 }
 
-.about-brazil-flag {
-  display: inline-block;
-  font-size: 0.95em;
-  line-height: 1;
-  transform: translateY(1px);
-}
-
-.about-country-callout {
-  position: absolute;
-  top: -34px;
-  left: 208px;
-  width: 125px;
+.about-going-card__column p.about-travel-feature__headline {
+  max-width: 380px;
+  margin: 0;
   color: var(--primary);
-  font-size: 13px;
-  font-style: italic;
+  font-size: 14px;
   font-weight: 400;
-  line-height: 1;
-  pointer-events: none;
-  white-space: nowrap;
+  line-height: 1.48;
 }
 
-.about-country-callout svg {
+.about-travel-feature__headline strong {
+  font-weight: 700;
+}
+
+.about-travel-feature__window {
   display: block;
-  width: 34px;
-  margin: 2px 0 0 82px;
-  transform: rotate(-14deg);
+  width: min(38%, 128px);
+  margin-top: 8px;
+  cursor: pointer;
+}
+
+.about-travel-feature__window img {
+  display: block;
+  height: auto;
+  width: 100%;
+}
+
+[data-theme="dark"] .about-travel-feature__window img {
+  filter: invert(1) brightness(1.22);
+  opacity: 0.9;
+}
+
+.about-going-card__column p.about-travel-feature__hint {
+  max-width: none;
+  margin: 2px 0 0;
+  color: var(--secondary);
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.25;
 }
 
 .about-going-card__divider {
@@ -4256,36 +4268,6 @@ html[data-theme="dark"] .case-study-hero__logo--learvo {
   content: "";
   opacity: 0.55;
   transform: translateX(-50%);
-}
-
-.about-country-pill {
-  display: inline-flex;
-  align-items: center;
-  margin-inline: 2px;
-  border: 1px solid rgba(48, 48, 48, 0.16);
-  border-radius: 999px;
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.78), rgba(226, 228, 231, 0.42)),
-    rgba(255, 255, 255, 0.3);
-  box-shadow:
-    0 10px 24px rgba(48, 48, 48, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.82);
-  padding: 4px 11px 5px;
-  color: var(--primary);
-  font-size: 23.5px;
-  font-weight: 500;
-  line-height: 1;
-  white-space: nowrap;
-}
-
-[data-theme="dark"] .about-country-pill {
-  border-color: rgba(242, 242, 242, 0.18);
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.05)),
-    rgba(255, 255, 255, 0.03);
-  box-shadow:
-    0 10px 24px rgba(0, 0, 0, 0.18),
-    inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
 .resume-placeholder {
@@ -4663,16 +4645,8 @@ html[data-theme="dark"] .case-study-hero__logo--learvo {
     min-height: 0;
   }
 
-  .about-going-card__column--personal h3 {
-    position: static;
-  }
-
   .about-going-card__personal-body {
     margin-top: 0;
-  }
-
-  .about-country-callout {
-    display: none;
   }
 
   .about-going-card__divider {
@@ -4930,10 +4904,6 @@ html[data-theme="dark"] .case-study-hero__logo--learvo {
     display: none;
   }
 
-  .hover-image-preview {
-    display: none;
-  }
-
   .about-hero p,
   .about-card p {
     font-size: 14px;
@@ -4955,12 +4925,30 @@ html[data-theme="dark"] .case-study-hero__logo--learvo {
     font-size: 14px;
   }
 
+  .about-going-card__column p.about-travel-feature__headline {
+    font-size: 14px;
+  }
+
+  .about-going-card__column p.about-travel-feature__hint {
+    font-size: 12px;
+  }
+
+  .about-travel-feature__window {
+    width: min(44%, 128px);
+  }
+
   .about-timeline {
     gap: 28px;
   }
 
   .about-orbit {
     width: 140px;
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .hover-image-preview {
+    display: none;
   }
 }
 

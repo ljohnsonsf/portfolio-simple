@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  type MouseEvent as ReactMouseEvent,
   type PointerEvent,
   type ReactNode,
   useEffect,
@@ -16,6 +17,10 @@ type HoverImagePreviewProps = {
   as?: "div" | "span";
   cycleDuration?: number;
 };
+
+type HoverTriggerEvent =
+  | PointerEvent<HTMLElement>
+  | ReactMouseEvent<HTMLElement>;
 
 const viewportPadding = 14;
 const cursorOffsetX = 24;
@@ -119,7 +124,7 @@ export function HoverImagePreview({
   };
 
   const updateTargetPosition = (
-    event: PointerEvent<HTMLElement>,
+    event: HoverTriggerEvent,
     shouldSnap = false,
   ) => {
     const preview = previewRef.current;
@@ -148,7 +153,7 @@ export function HoverImagePreview({
     startAnimation();
   };
 
-  const handlePointerEnter = (event: PointerEvent<HTMLElement>) => {
+  const handlePointerEnter = (event: HoverTriggerEvent) => {
     if (images.length === 0) {
       return;
     }
@@ -159,7 +164,7 @@ export function HoverImagePreview({
     updateTargetPosition(event, true);
   };
 
-  const handlePointerMove = (event: PointerEvent<HTMLElement>) => {
+  const handlePointerMove = (event: HoverTriggerEvent) => {
     if (!hoveringRef.current) {
       return;
     }
@@ -180,6 +185,9 @@ export function HoverImagePreview({
       onPointerEnter={handlePointerEnter}
       onPointerLeave={handlePointerLeave}
       onPointerMove={handlePointerMove}
+      onMouseEnter={handlePointerEnter}
+      onMouseLeave={handlePointerLeave}
+      onMouseMove={handlePointerMove}
     >
       {children}
       {isMounted

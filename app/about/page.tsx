@@ -318,39 +318,30 @@ export default function AboutPage() {
 
           <div className="about-going-card__divider" aria-hidden="true" />
 
-          <div className="about-going-card__column about-going-card__column--personal">
-            <h3>Personally</h3>
-            <span className="about-country-callout" aria-hidden="true">
-              Check em out!
-              <svg
-                viewBox="0 0 57 68"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M0.380108 58.6537C-0.0530856 58.9962 -0.126548 59.6251 0.21603 60.0583L5.79864 67.1177C6.14122 67.5509 6.77011 67.6243 7.20331 67.2818C7.6365 66.9392 7.70996 66.3103 7.36738 65.8771L2.40506 59.6021L8.68004 54.6398C9.11324 54.2972 9.1867 53.6683 8.84412 53.2351C8.50155 52.8019 7.87266 52.7285 7.43946 53.071L0.380108 58.6537ZM46.9932 0.328857L46.0488 0.657709C50.6098 13.7559 53.3763 24.3157 54.1454 32.69C54.9149 41.0681 53.6719 47.1094 50.3914 51.3272C47.1145 55.5403 41.6452 58.1379 33.4914 59.2644C25.3373 60.3909 14.644 60.025 1.11642 58.4448L1.0004 59.438L0.884377 60.4313C14.4635 62.0175 25.3572 62.4071 33.7651 61.2456C42.1733 60.084 48.2408 57.3499 51.9701 52.5551C55.6958 47.765 56.9283 41.1221 56.1371 32.507C55.3455 23.8881 52.5151 13.1457 47.9375 6.16227e-06L46.9932 0.328857Z"
-                  fill="currentColor"
-                />
-              </svg>
-            </span>
+          <div
+            className="about-going-card__column about-going-card__column--personal"
+            aria-label="Personally"
+          >
             <div className="about-going-card__personal-body">
-              <p>
-                I&apos;ve so far traveled to{" "}
-                <HoverImagePreview
-                  as="span"
-                  className="about-country-pill"
-                  images={countryPreviewImages}
-                  cycleDuration={250}
-                >
-                  22 countries
-                </HoverImagePreview>
-                .
+              <p className="about-travel-feature__headline">
+                I&apos;ve so far travelled to <strong>22 countries.</strong>
+                <br />
+                Next on my list is Brazil!
               </p>
-              <p>
-                Next on my list is Brazil{" "}
-                <span className="about-brazil-flag" role="img" aria-label="Brazil flag">
-                  🇧🇷
-                </span>
+              <HoverImagePreview
+                className="about-travel-feature__window"
+                images={countryPreviewImages}
+                cycleDuration={250}
+              >
+                <img
+                  src="/about/airplane-window.png"
+                  alt="Line drawing of an airplane wing viewed through a window above clouds."
+                  width={186}
+                  height={266}
+                />
+              </HoverImagePreview>
+              <p className="about-travel-feature__hint">
+                hover to see where I&apos;ve been
               </p>
             </div>
           </div>

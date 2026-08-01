@@ -1018,8 +1018,8 @@ export function CommvaultCaseStudyPage({
           className: "case-study-hero__logo--commvault",
         }}
         copy={[
+          "Commvault helps organizations protect, secure, and recover data across cloud, SaaS, and on-premises environments.",
           "I created a reusable product-visual system that helped prospective customers understand complex enterprise capabilities while reducing reliance on quickly outdated screenshots.",
-          "The system was designed to support 70+ placements across Commvault.com and improved correct capability identification from 53% to 67% in a directional study.",
         ]}
         image={{
           src: "/case-studies/commvault/commvault-hero.png",
