@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Script from "next/script";
 import { ArrowUpRight, Info } from "lucide-react";
+import { DesignJourney } from "@/components/design-journey";
 import { HoverImagePreview } from "@/components/hover-image-preview";
 import { PageReveal } from "@/components/page-reveal";
 import { profile } from "@/lib/profile";
@@ -470,29 +471,7 @@ export default function AboutPage() {
           </summary>
 
           <div className="about-design-card__content">
-            <div className="about-design-card__art" aria-hidden="true">
-              <Image
-                className="about-orbit"
-                src="/ikigai.svg"
-                alt=""
-                width={231}
-                height={231}
-                unoptimized
-              />
-            </div>
-
-            <div className="about-design-card__copy">
-              <h2 id="about-why-design">Why design?</h2>
-              <p>
-                While working in tech sales, I became fascinated with the question
-                of why certain product experiences resonated with users and others
-                didn&apos;t. That curiosity led me to begin my pivot into design.
-              </p>
-              <p>
-                Now, design has become my ikigai: the perfect intersection between
-                passion, profession, and personal mission.
-              </p>
-            </div>
+            <DesignJourney />
           </div>
         </details>
 
