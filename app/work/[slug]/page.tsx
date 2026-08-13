@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { AwsCaseStudyPage } from "@/components/aws-case-study-page";
 import { CommvaultCaseStudyPage } from "@/components/commvault-case-study-page";
+import { CultCookiesCaseStudyPage } from "@/components/cult-cookies-case-study-page";
 import {
   CaseStudyBody,
   CaseStudyHero,
@@ -348,6 +349,10 @@ export default async function CaseStudyPage({
 
   if (study.slug === "commvault-visual-system") {
     return <CommvaultCaseStudyPage study={study} />;
+  }
+
+  if (study.slug === "cult-cookies") {
+    return <CultCookiesCaseStudyPage study={study} />;
   }
 
   return (

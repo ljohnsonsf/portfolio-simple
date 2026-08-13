@@ -2,13 +2,31 @@
 
 import { useCallback, useEffect, useRef, type PointerEvent } from "react";
 import Image from "next/image";
-import { ExternalLink } from "lucide-react";
+import Link from "next/link";
+import { ArrowRight, ExternalLink } from "lucide-react";
 import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
+import type { CaseStudy } from "@/lib/case-studies";
 
 const MAX_TILT = 9;
 const TILT_EASE = 0.14;
 const TILT_SETTLE_THRESHOLD = 0.01;
 const ACTIVE_GLINT_OPACITY = "0.62";
+
+type OtherWorkCardProps = {
+  caseStudies: CaseStudy[];
+};
+
+type OtherWorkItem = {
+  key: string;
+  title: string;
+  description: string;
+  tools: string;
+  meta: string[];
+  href: string;
+  previewImage: string;
+  ctaLabel: string;
+  external?: boolean;
+};
 
 type TiltState = {
   targetX: number;
@@ -19,7 +37,43 @@ type TiltState = {
   frameId: number | null;
 };
 
-export function OtherWorkCard() {
+const monetGalleryItem: OtherWorkItem = {
+  key: "monet-gallery",
+  title: "Monet Gallery",
+  description:
+    "Created an immersive art gallery web experience focused on the works of Claude Monet.",
+  tools: "Figma • Claude Code • HTML • CSS • JavaScript",
+  meta: ["Academic Solo Project", "6 weeks"],
+  href: "https://monetgallery.vercel.app/",
+  previewImage: "/previews/monet-gallery.png",
+  ctaLabel: "View The Gallery",
+  external: true,
+};
+
+function toOtherWorkItem(study: CaseStudy): OtherWorkItem {
+  const isCultCookies = study.slug === "cult-cookies";
+
+  return {
+    key: study.slug,
+    title: study.title,
+    description: isCultCookies
+      ? "A food truck, brand, and business built from the ground up"
+      : study.description,
+    tools: isCultCookies
+      ? "Spatial Design • Brand Identity • Operations • Fabrication • Brand Design • Baking"
+      : "Fabrication • Spatial Design • Branding • Product • Operations",
+    meta: isCultCookies
+      ? ["Independent Venture/Passion Project", "2023"]
+      : ["Self-initiated", "2023"],
+    href: study.href,
+    previewImage: isCultCookies
+      ? "/case-studies/cult-cookies/card-cookie-box.jpg"
+      : study.previewImage,
+    ctaLabel: isCultCookies ? "View The Project" : "View Case Study",
+  };
+}
+
+function OtherWorkItemCard({ item }: { item: OtherWorkItem }) {
   const reduceMotion = usePrefersReducedMotion();
   const tiltState = useRef<TiltState>({
     targetX: 0,
@@ -156,53 +210,101 @@ export function OtherWorkCard() {
     [startTiltAnimation],
   );
 
-  return (
-    <a
-      className="case-card-link case-study-card-wrapper other-work-card-link"
-      href="https://monetgallery.vercel.app/"
-      target="_blank"
-      rel="noreferrer"
-      onPointerMove={handlePointerMove}
-      onPointerLeave={handlePointerLeave}
-      onPointerCancel={handlePointerLeave}
+  const handlePointerOut = useCallback(
+    (event: PointerEvent<HTMLAnchorElement>) => {
+      const relatedTarget = event.relatedTarget;
+
+      if (event.currentTarget.matches(":hover")) {
+        return;
+      }
+
+      if (
+        relatedTarget instanceof Node &&
+        event.currentTarget.contains(relatedTarget)
+      ) {
+        return;
+      }
+
+      handlePointerLeave(event);
+    },
+    [handlePointerLeave],
+  );
+
+  const card = (
+    <article
+      className={`case-card case-study-card other-work-card other-work-card--${item.key}`}
     >
-      <article className="case-card case-study-card other-work-card">
-        <div className="case-card__copy other-work-card__copy">
-          <h2 className="case-card__title other-work-card__title">
-            Monet Gallery
-          </h2>
-          <p className="case-card__description other-work-card__description">
-            Created an immersive art gallery web experience focused on the works
-            of Claude Monet.
-          </p>
+      <div className="case-card__copy other-work-card__copy">
+        <h2 className="case-card__title other-work-card__title">{item.title}</h2>
+        <p className="case-card__description other-work-card__description">
+          {item.description}
+        </p>
 
-          <div className="case-card__rule other-work-card__rule" aria-hidden="true" />
-          <p className="other-work-card__tools">
-            Built using Figma, Claude Code, HTML, CSS, JavaScript
-          </p>
-          <div className="case-card__rule other-work-card__rule" aria-hidden="true" />
+        <div className="case-card__rule other-work-card__rule" aria-hidden="true" />
+        {item.tools ? <p className="other-work-card__tools">{item.tools}</p> : null}
 
+        <div className="other-work-card__footer">
           <div className="other-work-card__meta">
-            <span>Academic Solo Project</span>
-            <span>6 weeks</span>
+            {item.meta.map((metaItem) => (
+              <span key={metaItem}>{metaItem}</span>
+            ))}
           </div>
 
-          <span className="primary-button case-card__cta">
-            <span>View The Gallery</span>
-            <ExternalLink aria-hidden="true" size={13} strokeWidth={1.8} />
+          <span className="other-work-card__cta">
+            <span>{item.ctaLabel}</span>
+            {item.external ? (
+              <ExternalLink aria-hidden="true" size={13} strokeWidth={1.8} />
+            ) : (
+              <ArrowRight aria-hidden="true" size={15} strokeWidth={1.7} />
+            )}
           </span>
         </div>
+      </div>
 
-        <div className="case-card__visual case-card__visual--image other-work-card__visual">
-          <Image
-            src="/previews/monet-gallery.png"
-            alt=""
-            width={2518}
-            height={1480}
-            aria-hidden="true"
-          />
-        </div>
-      </article>
-    </a>
+      <div className="case-card__visual case-card__visual--image other-work-card__visual">
+        <Image
+          src={item.previewImage}
+          alt=""
+          width={2518}
+          height={1480}
+          sizes="(max-width: 900px) 100vw, 480px"
+          aria-hidden="true"
+        />
+      </div>
+    </article>
+  );
+
+  const sharedProps = {
+    className: "case-card-link case-study-card-wrapper other-work-card-link",
+    onPointerMove: handlePointerMove,
+    onPointerLeave: handlePointerLeave,
+    onPointerCancel: handlePointerLeave,
+    onPointerOut: handlePointerOut,
+  };
+
+  if (item.external) {
+    return (
+      <a {...sharedProps} href={item.href} target="_blank" rel="noreferrer">
+        {card}
+      </a>
+    );
+  }
+
+  return (
+    <Link {...sharedProps} href={item.href}>
+      {card}
+    </Link>
+  );
+}
+
+export function OtherWorkCard({ caseStudies }: OtherWorkCardProps) {
+  const items = [...caseStudies.map(toOtherWorkItem), monetGalleryItem];
+
+  return (
+    <>
+      {items.map((item) => (
+        <OtherWorkItemCard item={item} key={item.key} />
+      ))}
+    </>
   );
 }

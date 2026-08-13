@@ -14,9 +14,32 @@ export type CaseStudy = {
   summary: string;
   role: string;
   outcome: string;
+  homeSection?: "case-studies" | "other-work";
 };
 
 export const caseStudies: CaseStudy[] = [
+  {
+    slug: "cult-cookies",
+    number: "04",
+    title: "Cult Cookies",
+    description:
+      "A food truck, brand, and operating system built from the ground up.",
+    metricValue: "01",
+    metricText: "self-initiated business built across fabrication, brand, product, and operations.",
+    tags: ["Fabrication", "Branding", "Operations"],
+    meta: "2023 · Self-initiated",
+    roleMeta: "Role: Founder / Designer / Builder / Operator",
+    projectTypeMeta: "Project Type: Self-initiated",
+    href: "/work/cult-cookies",
+    previewImage: "/case-studies/cult-cookies/truck-finished-side.jpg",
+    summary:
+      "Cult Cookies was a food-truck business built from the ground up, from the vehicle conversion and kitchen workspace to the brand, packaging, product, and customer experience.",
+    role:
+      "Founded, designed, fabricated, branded, and operated the business across spatial design, product, service, and day-to-day operations.",
+    outcome:
+      "A functioning mobile food business where the truck, menu, packaging, workflow, and customer interaction had to operate as one system.",
+    homeSection: "other-work",
+  },
   {
     slug: "commvault-visual-system",
     number: "03",

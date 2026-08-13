@@ -85,7 +85,7 @@ type CaseStudyOutcomeCard = {
 
 type CaseStudyTakeaway = {
   title: string;
-  description: string;
+  description: string | string[];
 };
 
 export function CaseStudyPageShell({
@@ -94,7 +94,7 @@ export function CaseStudyPageShell({
 }: CaseStudyPageShellProps) {
   return (
     <>
-      <CaseStudySideNav links={links} />
+      {links.length ? <CaseStudySideNav links={links} /> : null}
       <PageReveal className="page-block case-study-page-block">
         <article className="case-study-detail-page">{children}</article>
       </PageReveal>
@@ -320,7 +320,13 @@ export function CaseStudyTakeaways({
           <span aria-hidden="true">{index + 1}</span>
           <div>
             <h3>{takeaway.title}</h3>
-            <p>{takeaway.description}</p>
+            {Array.isArray(takeaway.description) ? (
+              takeaway.description.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))
+            ) : (
+              <p>{takeaway.description}</p>
+            )}
           </div>
         </li>
       ))}
