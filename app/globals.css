@@ -4947,8 +4947,8 @@ html[data-theme="dark"] .case-study-hero__logo--learvo {
 
 .about-journey-waypoint--medicine {
   --dot-left: 104px;
-  --label-left: -8px;
-  --label-top: -54px;
+  --label-left: 36px;
+  --label-top: -30px;
   width: 158px;
   left: min(calc(89% - 118px), calc(100% - 158px));
   top: calc(18% - 14px);

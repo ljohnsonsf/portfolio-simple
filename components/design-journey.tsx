@@ -35,36 +35,33 @@ const journeySteps: JourneyStep[] = [
   {
     id: "medicine",
     number: "1.",
-    title: "Medicine",
-    mapSubtitle: "Seeing the system",
-    accordionSubtitle: "Seeing how systems shape experiences",
+    title: "Healthcare",
+    mapSubtitle: "Understanding people",
+    accordionSubtitle: "Understanding people",
     body: [
-      "Working at a community health center showed me that helping someone isn’t only about addressing the problem in front of you. People move through layers of information, resources, processes, and constraints—and those systems can either help them reach what they need or make it much harder.",
-      "It was my first lesson in looking beyond the individual moment to understand the system surrounding it.",
+      "Healthcare taught me to look beyond the immediate problem and pay attention to the broader context shaping someone’s experience.",
     ],
     pathProgress: 1,
   },
   {
     id: "sales",
     number: "2.",
-    title: "Sales",
-    mapSubtitle: "Finding the friction",
-    accordionSubtitle: "Learning to uncover what’s getting in the way",
+    title: "Entrepreneurship",
+    mapSubtitle: "Making things real",
+    accordionSubtitle: "Making things real",
     body: [
-      "Tech sales put me in a completely different setting, but I kept coming back to the same questions. What is this person actually trying to accomplish? Why isn’t the current solution working? What’s behind the thing they’re asking for?",
-      "I learned to listen beneath the ask, uncover needs and constraints, and make sense of the different people and priorities surrounding a problem.",
+      "Cult Cookies gave me an outlet for a kind of creativity I hadn’t found elsewhere. I developed the brand, flavors, physical space, and customer experience—and learned firsthand how much work it takes to turn an idea into something real.",
     ],
     pathProgress: 0.45,
   },
   {
     id: "design",
     number: "3.",
-    title: "Design",
-    mapSubtitle: "Designing a better path",
-    accordionSubtitle: "Turning that curiosity into action",
+    title: "Sales",
+    mapSubtitle: "Finding what could be better",
+    accordionSubtitle: "Finding what could be better",
     body: [
-      "Design became the place where those threads finally came together. It gave me a way to understand people’s goals, zoom out to see the systems around them, identify where friction lives—and then actually do something about it.",
-      "That’s still how I approach design today: understand the person, understand the system, and make the path between them and their goal a little easier.",
+      "Sales put me close to people trying to understand and use products. I became increasingly interested in the moments where things felt confusing, frustrating, or harder than they needed to be. That eventually led me to product design.",
     ],
     pathProgress: 0,
   },
@@ -126,18 +123,15 @@ export function DesignJourney() {
 function JourneyIntro() {
   return (
     <div className="about-journey__intro">
-      <h2 id="about-why-design">A winding path to design</h2>
+      <h2 id="about-why-design">What shaped how I design</h2>
       <p className="about-journey__intro-lead">
-        Different fields, same question.
+        My path into design moved through healthcare, entrepreneurship, and
+        sales.
       </p>
       <p>
-        Medicine, tech sales, and design might seem unrelated on the surface.
-        But in each, I found myself looking at the same thing: what is someone
-        trying to accomplish, how are they moving through the system around
-        them, and where are they getting stuck?
-      </p>
-      <p>
-        Each stop taught me to see those barriers from a different angle.
+        The industries changed, but I kept coming back to the same questions:
+        how people move through systems, where they get stuck, and what could
+        work better.
       </p>
     </div>
   );
@@ -201,8 +195,8 @@ function JourneyMap({ activeStep, onSelectStep }: JourneyMapProps) {
   return (
     <div className="about-journey-map" aria-labelledby={mapLabelId}>
       <p className="sr-only" id={mapLabelId}>
-        Interactive map of Lauren&apos;s path through Design, Sales, and
-        Medicine.
+        Interactive map of Lauren&apos;s path through Understanding people,
+        Making things real, and Finding what could be better.
       </p>
       <div className="about-journey-map__canvas">
         <svg
@@ -249,9 +243,6 @@ function JourneyMap({ activeStep, onSelectStep }: JourneyMapProps) {
             </span>
             <span className="about-journey-waypoint__label">
               <span className="about-journey-waypoint__title">
-                {step.number} {step.title}
-              </span>
-              <span className="about-journey-waypoint__subtitle">
                 {step.mapSubtitle}
               </span>
             </span>

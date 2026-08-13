@@ -18,6 +18,7 @@ const timeline = [
     date: "Fall 2026",
     title: "Incoming Product Design Intern",
     place: "Kara",
+    hidden: true,
   },
   {
     date: "Summer 2026",
@@ -393,7 +394,7 @@ export default function AboutPage() {
         </div>
 
         <ol className="about-timeline" aria-label="Lauren Johnson timeline">
-          {timeline.map((item) => (
+          {timeline.filter((item) => !item.hidden).map((item) => (
             <li className="about-timeline__item" key={`${item.date}-${item.title}`}>
               <p className="about-timeline__date">{item.date}</p>
               <p className="about-timeline__title">
