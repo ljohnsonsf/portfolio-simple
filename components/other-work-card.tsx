@@ -37,6 +37,19 @@ type TiltState = {
   frameId: number | null;
 };
 
+const frequencyFinderItem: OtherWorkItem = {
+  key: "frequency-finder",
+  title: "Frequency Finder",
+  description:
+    "An interactive personality test that translates your traits into sound and a song match",
+  tools: "Generative AI • Claude/Codex • NextJS • AI Prototyping",
+  meta: ["Just for fun", "2026"],
+  href: "https://frequency-finder.vercel.app/",
+  previewImage: "/previews/frequency-finder.png",
+  ctaLabel: "View Frequency Finder",
+  external: true,
+};
+
 const monetGalleryItem: OtherWorkItem = {
   key: "monet-gallery",
   title: "Monet Gallery",
@@ -298,7 +311,11 @@ function OtherWorkItemCard({ item }: { item: OtherWorkItem }) {
 }
 
 export function OtherWorkCard({ caseStudies }: OtherWorkCardProps) {
-  const items = [...caseStudies.map(toOtherWorkItem), monetGalleryItem];
+  const items = [
+    frequencyFinderItem,
+    ...caseStudies.map(toOtherWorkItem),
+    monetGalleryItem,
+  ];
 
   return (
     <>
