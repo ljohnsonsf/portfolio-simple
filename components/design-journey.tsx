@@ -28,7 +28,7 @@ const journeyPath =
 const fallbackPathPoints: Record<JourneyStepId, { x: number; y: number }> = {
   healthcare: { x: 232, y: 128 },
   sales: { x: 334, y: 210 },
-  design: { x: 78, y: 332 },
+  design: { x: 116, y: 310 },
 };
 
 const journeySteps: JourneyStep[] = [
@@ -63,7 +63,7 @@ const journeySteps: JourneyStep[] = [
     body: [
       "Design is where I've settled in to create better paths and experiences, shaping clearer flows around people’s needs, constraints, and decisions.",
     ],
-    pathProgress: 1,
+    pathProgress: 0.9,
   },
 ];
 
