@@ -467,7 +467,7 @@ export default function AboutPage() {
       <section className="about-card about-design-card" aria-label="Design details">
         <details className="about-design-journey">
           <summary className="about-design-card__summary">
-            <span className="about-card__eyebrow">Design Journey</span>
+            <span className="about-card__eyebrow">DESIGN JOURNEY</span>
             <span className="about-toolkit__toggle" aria-hidden="true" />
           </summary>
 

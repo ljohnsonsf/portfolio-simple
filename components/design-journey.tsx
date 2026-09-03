@@ -10,7 +10,7 @@ import {
 } from "motion/react";
 import { usePrefersReducedMotion } from "@/hooks/use-prefers-reduced-motion";
 
-type JourneyStepId = "medicine" | "sales" | "design";
+type JourneyStepId = "healthcare" | "sales" | "design";
 
 type JourneyStep = {
   id: JourneyStepId;
@@ -23,47 +23,47 @@ type JourneyStep = {
 };
 
 const journeyPath =
-  "M 66 326 C 124 286 174 270 252 258 C 322 247 351 232 386 188 C 423 141 467 103 570 76";
+  "M 232 128 C 294 126 402 150 334 210 C 292 248 166 264 78 332";
 
 const fallbackPathPoints: Record<JourneyStepId, { x: number; y: number }> = {
-  design: { x: 66, y: 326 },
-  sales: { x: 302, y: 244 },
-  medicine: { x: 570, y: 76 },
+  healthcare: { x: 232, y: 128 },
+  sales: { x: 334, y: 210 },
+  design: { x: 78, y: 332 },
 };
 
 const journeySteps: JourneyStep[] = [
   {
-    id: "medicine",
+    id: "healthcare",
     number: "1.",
     title: "Healthcare",
-    mapSubtitle: "Understanding people",
-    accordionSubtitle: "Understanding people",
+    mapSubtitle: "Seeing the full context",
+    accordionSubtitle: "Seeing the full context",
     body: [
-      "Healthcare taught me to look beyond the immediate problem and pay attention to the broader context shaping someone’s experience.",
+      "Healthcare taught me to look beyond the immediate problem and understand the broader context shaping someone’s experience: the systems, constraints, and moments of friction around them.",
     ],
-    pathProgress: 1,
+    pathProgress: 0,
   },
   {
     id: "sales",
     number: "2.",
-    title: "Entrepreneurship",
-    mapSubtitle: "Making things real",
-    accordionSubtitle: "Making things real",
+    title: "Sales",
+    mapSubtitle: "Spotting friction",
+    accordionSubtitle: "Spotting friction",
     body: [
-      "Cult Cookies gave me an outlet for a kind of creativity I hadn’t found elsewhere. I developed the brand, flavors, physical space, and customer experience—and learned firsthand how much work it takes to turn an idea into something real.",
+      "Sales taught me to spot friction and barriers by listening for the moments where people got stuck, hesitated, or had to work harder than they should.",
     ],
-    pathProgress: 0.45,
+    pathProgress: 0.46,
   },
   {
     id: "design",
     number: "3.",
-    title: "Sales",
-    mapSubtitle: "Finding what could be better",
-    accordionSubtitle: "Finding what could be better",
+    title: "Design",
+    mapSubtitle: "Designing better paths",
+    accordionSubtitle: "Designing better paths",
     body: [
-      "Sales put me close to people trying to understand and use products. I became increasingly interested in the moments where things felt confusing, frustrating, or harder than they needed to be. That eventually led me to product design.",
+      "Design is where I've settled in to create better paths and experiences, shaping clearer flows around people’s needs, constraints, and decisions.",
     ],
-    pathProgress: 0,
+    pathProgress: 1,
   },
 ];
 
@@ -76,11 +76,11 @@ const stepsById = journeySteps.reduce(
 );
 
 function closestFallbackPoint(progress: number) {
-  if (progress > 0.76) {
-    return fallbackPathPoints.medicine;
+  if (progress < 0.24) {
+    return fallbackPathPoints.healthcare;
   }
 
-  if (progress > 0.24) {
+  if (progress < 0.76) {
     return fallbackPathPoints.sales;
   }
 
@@ -88,8 +88,8 @@ function closestFallbackPoint(progress: number) {
 }
 
 export function DesignJourney() {
-  const [activeStep, setActiveStep] = useState<JourneyStepId>("medicine");
-  const [openStep, setOpenStep] = useState<JourneyStepId | null>("medicine");
+  const [activeStep, setActiveStep] = useState<JourneyStepId>("healthcare");
+  const [openStep, setOpenStep] = useState<JourneyStepId | null>("healthcare");
 
   const selectStep = (step: JourneyStepId) => {
     setActiveStep(step);
@@ -125,13 +125,12 @@ function JourneyIntro() {
     <div className="about-journey__intro">
       <h2 id="about-why-design">What shaped how I design</h2>
       <p className="about-journey__intro-lead">
-        My path into design moved through healthcare, entrepreneurship, and
-        sales.
+        My path into design moved through healthcare, sales, and design.
       </p>
       <p>
-        The industries changed, but I kept coming back to the same questions:
-        how people move through systems, where they get stuck, and what could
-        work better.
+        Across each field, I kept returning to the same challenge: where people
+        face friction, what gets in their way, and how experiences could work
+        better.
       </p>
     </div>
   );
@@ -145,10 +144,10 @@ type JourneyMapProps = {
 function JourneyMap({ activeStep, onSelectStep }: JourneyMapProps) {
   const pathRef = useRef<SVGPathElement | null>(null);
   const totalLengthRef = useRef(0);
-  const previousProgressRef = useRef(stepsById.medicine.pathProgress);
+  const previousProgressRef = useRef(stepsById.healthcare.pathProgress);
   const [travelDirection, setTravelDirection] = useState(1);
   const prefersReducedMotion = usePrefersReducedMotion();
-  const pathProgress = useMotionValue(stepsById.medicine.pathProgress);
+  const pathProgress = useMotionValue(stepsById.healthcare.pathProgress);
   const mapLabelId = useId();
 
   const getPathPoint = (progress: number) => {
@@ -162,8 +161,14 @@ function JourneyMap({ activeStep, onSelectStep }: JourneyMapProps) {
     return { x: point.x, y: point.y };
   };
 
-  const boatX = useTransform(pathProgress, (progress) => getPathPoint(progress).x);
-  const boatY = useTransform(pathProgress, (progress) => getPathPoint(progress).y);
+  const boatLeft = useTransform(
+    pathProgress,
+    (progress) => `${(getPathPoint(progress).x / 640) * 100}%`,
+  );
+  const boatTop = useTransform(
+    pathProgress,
+    (progress) => `${(getPathPoint(progress).y / 420) * 100}%`,
+  );
 
   useEffect(() => {
     if (!pathRef.current) {
@@ -195,13 +200,14 @@ function JourneyMap({ activeStep, onSelectStep }: JourneyMapProps) {
   return (
     <div className="about-journey-map" aria-labelledby={mapLabelId}>
       <p className="sr-only" id={mapLabelId}>
-        Interactive map of Lauren&apos;s path through Understanding people,
-        Making things real, and Finding what could be better.
+        Interactive map of Lauren&apos;s path through Seeing the full context,
+        Spotting friction, and Designing better paths.
       </p>
       <div className="about-journey-map__canvas">
         <svg
           aria-hidden="true"
           className="about-journey-map__svg"
+          preserveAspectRatio="none"
           viewBox="0 0 640 420"
         >
           <path
@@ -209,19 +215,21 @@ function JourneyMap({ activeStep, onSelectStep }: JourneyMapProps) {
             className="about-journey-map__path"
             d={journeyPath}
           />
-          <motion.g
-            aria-hidden="true"
-            className="about-journey-map__boat"
-            style={{ x: boatX, y: boatY }}
-          >
-            <motion.g
-              animate={{ scaleX: travelDirection }}
-              transition={{ duration: prefersReducedMotion ? 0.01 : 0.2 }}
-            >
-              <BoatMarker />
-            </motion.g>
-          </motion.g>
         </svg>
+
+        <motion.div
+          aria-hidden="true"
+          className="about-journey-map__boat"
+          style={{ left: boatLeft, top: boatTop }}
+        >
+          <svg
+            className="about-journey-map__boat-icon"
+            style={{ transform: `scaleX(${travelDirection})` }}
+            viewBox="-30 -38 60 74"
+          >
+            <BoatMarker />
+          </svg>
+        </motion.div>
 
         {journeySteps.map((step) => (
           <button
@@ -255,24 +263,23 @@ function JourneyMap({ activeStep, onSelectStep }: JourneyMapProps) {
 
 function BoatMarker() {
   return (
-    <g className="about-journey-boat" transform="translate(-4 -1)">
+    <g className="about-journey-boat">
       <path
-        d="M -3 -58 C 5 -48 13 -37 19 -24 C 11 -27 4 -28 -3 -27 Z"
+        d="M 1 -31 C 10 -22 16 -12 19 -1 C 12 -4 6 -5 1 -4 Z"
         fill="var(--surface)"
       />
       <path
-        d="M -6 -56 C -16 -46 -22 -35 -23 -24 C -16 -26 -10 -27 -6 -27 Z"
+        d="M -3 -29 C -12 -21 -17 -11 -18 -1 C -12 -3 -7 -4 -3 -4 Z"
         fill="var(--surface)"
       />
       <path
-        d="M -31 -22 C -18 -16 6 -15 29 -21 C 25 -12 16 -7 1 -6 C -14 -5 -26 -10 -31 -22 Z"
+        d="M -24 0 C -15 6 6 7 25 0 C 21 8 12 13 0 13 C -13 13 -21 8 -24 0 Z"
         fill="var(--surface)"
       />
-      <path d="M -4 -59 L -4 -24" />
-      <path d="M -23 -24 C -12 -21 9 -21 25 -23" />
-      <path d="M -28 -12 C -16 -9 3 -8 21 -11" />
-      <path d="M -31 2 C -24 -1 -18 3 -11 1 C -4 -2 2 2 9 0 C 16 -2 22 1 29 -1" />
-      <path d="M -20 11 C -13 8 -7 11 0 9 C 6 7 12 10 19 8" />
+      <path d="M 0 -32 L 0 0" />
+      <path d="M -18 -1 C -8 2 9 2 22 -1" />
+      <path d="M -18 20 C -12 18 -7 20 -1 19 C 5 18 10 20 16 18" />
+      <path d="M -10 27 C -4 25 1 27 7 26 C 13 25 17 26 21 25" />
     </g>
   );
 }
