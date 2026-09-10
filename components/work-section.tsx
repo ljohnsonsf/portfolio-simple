@@ -1,7 +1,7 @@
 "use client";
 
 import type { CSSProperties } from "react";
-import { useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { CaseStudyCard } from "@/components/case-study-card";
 import { OtherWorkCard } from "@/components/other-work-card";
 import type { CaseStudy } from "@/lib/case-studies";
@@ -11,6 +11,7 @@ type WorkSectionProps = {
 };
 
 type WorkTab = "case-studies" | "other-work";
+type TabTransitionDirection = "forward" | "backward";
 type WorkTabsStyle = CSSProperties & {
   "--tab-highlight-left"?: string;
   "--tab-highlight-width"?: string;
@@ -18,6 +19,8 @@ type WorkTabsStyle = CSSProperties & {
 
 export function WorkSection({ caseStudies }: WorkSectionProps) {
   const [activeTab, setActiveTab] = useState<WorkTab>("case-studies");
+  const [transitionDirection, setTransitionDirection] =
+    useState<TabTransitionDirection>("forward");
   const [tabIndicatorStyle, setTabIndicatorStyle] = useState<WorkTabsStyle>({});
   const tabsRef = useRef<HTMLDivElement | null>(null);
   const tabRefs = useRef<Record<WorkTab, HTMLButtonElement | null>>({
@@ -30,6 +33,26 @@ export function WorkSection({ caseStudies }: WorkSectionProps) {
   const otherWorkCaseStudies = caseStudies.filter(
     (study) => study.homeSection === "other-work",
   );
+
+  const switchTab = (nextTab: WorkTab) => {
+    if (nextTab === activeTab) {
+      return;
+    }
+
+    setTransitionDirection(
+      nextTab === "other-work" ? "forward" : "backward",
+    );
+    setActiveTab(nextTab);
+  };
+
+  useEffect(() => {
+    document.documentElement.dataset.workView = activeTab;
+    window.dispatchEvent(
+      new CustomEvent("lauren-portfolio-work-view-change", {
+        detail: { view: activeTab },
+      }),
+    );
+  }, [activeTab]);
 
   useLayoutEffect(() => {
     const updateIndicator = () => {
@@ -98,7 +121,7 @@ export function WorkSection({ caseStudies }: WorkSectionProps) {
           role="tab"
           aria-selected={activeTab === "case-studies"}
           aria-controls="case-studies-panel"
-          onClick={() => setActiveTab("case-studies")}
+          onClick={() => switchTab("case-studies")}
         >
           Case Studies
         </button>
@@ -112,7 +135,7 @@ export function WorkSection({ caseStudies }: WorkSectionProps) {
           role="tab"
           aria-selected={activeTab === "other-work"}
           aria-controls="other-work-panel"
-          onClick={() => setActiveTab("other-work")}
+          onClick={() => switchTab("other-work")}
         >
           Other Things I'm Proud Of
         </button>
@@ -120,7 +143,7 @@ export function WorkSection({ caseStudies }: WorkSectionProps) {
 
       {activeTab === "case-studies" ? (
         <div
-          className="case-list tab-panel-reveal"
+          className={`case-list tab-panel-reveal tab-panel-reveal--${transitionDirection}`}
           id="case-studies-panel"
           role="tabpanel"
           aria-labelledby="case-studies-tab"
@@ -131,7 +154,7 @@ export function WorkSection({ caseStudies }: WorkSectionProps) {
         </div>
       ) : (
         <div
-          className="other-work-panel tab-panel-reveal"
+          className={`other-work-panel tab-panel-reveal tab-panel-reveal--${transitionDirection}`}
           id="other-work-panel"
           role="tabpanel"
           aria-labelledby="other-work-tab"

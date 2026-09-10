@@ -329,9 +329,8 @@ export default function AboutPage() {
         <div className="about-hero__copy">
           <h1 id="about-intro-title">Hi, I&apos;m Lauren</h1>
           <p>
-            I&apos;m fascinated by systems that balance complexity, taste and
-            function, and the ever-evolving intersection of technology and
-            humanity.
+            I’m a designer who loves untangling complex problems and turning
+            them into clear, thoughtful experiences.
           </p>
         </div>
 

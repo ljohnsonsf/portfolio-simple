@@ -2,10 +2,13 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
+import { PortfolioAssistant } from "@/components/portfolio-assistant";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Analytics } from "@vercel/analytics/next"
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://laurenjohnson.design";
+const portfolioAssistantEnabled =
+  process.env.NEXT_PUBLIC_PORTFOLIO_ASSISTANT_ENABLED === "true";
 const siteDescription =
   "Lauren Johnson is a NYC-based Product Designer creating enterprise web and product experiences. She is currently a UX Web Design Intern at Commvault and pursuing an in M.S. Human-Computer Interaction.";
 const socialImage = new URL("/og-image.png", siteUrl).toString();
@@ -94,6 +97,7 @@ export default function RootLayout({
           <main>{children}</main>
           <Footer />
         </div>
+        {portfolioAssistantEnabled ? <PortfolioAssistant /> : null}
         <Analytics />
       </body>
     </html>
