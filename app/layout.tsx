@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
+import { PortfolioAssistant } from "@/components/portfolio-assistant";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Analytics } from "@vercel/analytics/next"
 
@@ -94,6 +95,7 @@ export default function RootLayout({
           <main>{children}</main>
           <Footer />
         </div>
+        <PortfolioAssistant />
         <Analytics />
       </body>
     </html>

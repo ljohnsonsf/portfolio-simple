@@ -1,7 +1,7 @@
 "use client";
 
 import type { CSSProperties } from "react";
-import { useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { CaseStudyCard } from "@/components/case-study-card";
 import { OtherWorkCard } from "@/components/other-work-card";
 import type { CaseStudy } from "@/lib/case-studies";
@@ -30,6 +30,15 @@ export function WorkSection({ caseStudies }: WorkSectionProps) {
   const otherWorkCaseStudies = caseStudies.filter(
     (study) => study.homeSection === "other-work",
   );
+
+  useEffect(() => {
+    document.documentElement.dataset.workView = activeTab;
+    window.dispatchEvent(
+      new CustomEvent("lauren-portfolio-work-view-change", {
+        detail: { view: activeTab },
+      }),
+    );
+  }, [activeTab]);
 
   useLayoutEffect(() => {
     const updateIndicator = () => {
