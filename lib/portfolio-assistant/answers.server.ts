@@ -20,7 +20,7 @@ export function createGroundedFallbackAnswer(
   }
 
   if (includesAny(normalized, ["resume", "cv"])) {
-    return "Lauren's approved public resume is here: https://drive.google.com/file/d/1jGtgokz3a2YHvUbqenRGkmxG0NlBB7CW/view?usp=sharing. Her resume context is global because the portfolio opens it as an external document.";
+    return "Lauren's approved public resume is here: https://drive.google.com/file/d/1Vs1SqfElhdZblXSM3VSuImjIGfVpuLIG/view?usp=sharing. Her resume context is global because the portfolio opens it as an external document.";
   }
 
   if (

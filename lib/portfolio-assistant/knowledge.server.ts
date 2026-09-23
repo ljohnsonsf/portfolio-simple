@@ -46,7 +46,7 @@ Lauren uses AI for research and synthesis support, concept exploration, interact
 
 Lauren is primarily seeking entry-level or junior Product Designer and UX Designer roles, including full-time roles, New Grad 2027 roles, and Fall/Winter 2026 internships. She is also open to relevant UX/UI Designer, Design Engineer, and Web Designer roles. Preferred arrangements are New York City hybrid, fully on-site, or remote.
 
-Approved professional contact methods: ljjsantafe@gmail.com and https://www.linkedin.com/in/ljohnsonsf/. Approved resume link: https://drive.google.com/file/d/1jGtgokz3a2YHvUbqenRGkmxG0NlBB7CW/view?usp=sharing. Never disclose a phone number, unapproved email address, private account, or more precise location.
+Approved professional contact methods: ljjsantafe@gmail.com and https://www.linkedin.com/in/ljohnsonsf/. Approved resume link: https://drive.google.com/file/d/1Vs1SqfElhdZblXSM3VSuImjIGfVpuLIG/view?usp=sharing. Never disclose a phone number, unapproved email address, private account, or more precise location.
 
 Limited approved outside-work details: Lauren enjoys baking, yoga, hiking, film photography, ceramics, and skiing. She has traveled to 22 countries, and Vietnam is her favorite country she has visited. Share no other personal or travel details.
 `.trim();
