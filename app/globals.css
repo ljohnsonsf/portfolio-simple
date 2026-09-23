@@ -443,7 +443,7 @@ html[data-theme="dark"] .case-card__visual--image {
   z-index: 1;
   width: min(984px, calc(100% - 36px));
   margin-inline: auto;
-  padding: 96px 0 76px;
+  padding: 68px 0 76px;
 }
 
 .site-header {
@@ -4820,11 +4820,14 @@ html[data-theme="dark"] .case-study-hero__logo--learvo {
 }
 
 .about-hero__copy {
+  padding-left: 28px;
   max-width: 405px;
   margin-left: 0;
 }
 
 .about-hero h1 {
+  position: relative;
+  top: -12px;
   margin: 0 0 34px;
   color: var(--primary);
   font-size: 30px;
@@ -5820,7 +5823,7 @@ html[data-theme="dark"] .case-study-hero__logo--learvo {
 @media (max-width: 900px) {
   .site-frame {
     width: min(100% - 28px, 984px);
-    padding-top: 48px;
+    padding-top: 28px;
   }
 
   .site-header {

@@ -3,7 +3,6 @@ import "./globals.css";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
 import { PortfolioAssistant } from "@/components/portfolio-assistant";
-import { ThemeToggle } from "@/components/theme-toggle";
 import { Analytics } from "@vercel/analytics/next"
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://laurenjohnson.design";
@@ -12,18 +11,6 @@ const portfolioAssistantEnabled =
 const siteDescription =
   "Lauren Johnson is a NYC-based Product Designer creating enterprise web and product experiences. She is currently a UX Web Design Intern at Commvault and pursuing an in M.S. Human-Computer Interaction.";
 const socialImage = new URL("/og-image.png", siteUrl).toString();
-
-const themeScript = `
-(() => {
-  try {
-    const stored = localStorage.getItem("lauren-portfolio-theme");
-    const preferred = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-    document.documentElement.dataset.theme = stored || preferred;
-  } catch {
-    document.documentElement.dataset.theme = "light";
-  }
-})();
-`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -64,8 +51,8 @@ export const metadata: Metadata = {
     images: [
       {
         url: socialImage,
-        width: 1200,
-        height: 630,
+        width: 2558,
+        height: 1388,
         alt: "Lauren Johnson portfolio preview",
       },
     ],
@@ -88,10 +75,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" data-theme="light">
       <body>
-        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
-        <ThemeToggle />
         <div className="site-frame">
           <Header />
           <main>{children}</main>
