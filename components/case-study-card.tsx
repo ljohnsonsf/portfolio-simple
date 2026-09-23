@@ -30,7 +30,7 @@ const previewVideos: Record<
       src: "/previews/commvault-logo.png",
       width: 1552,
       height: 300,
-      className: "case-preview-card__pill-logo--commvault",
+      className: "case-preview-card__footer-logo--commvault",
     },
   },
   "learvo-learning": {
@@ -42,7 +42,7 @@ const previewVideos: Record<
       src: "/previews/learvo-logo.png",
       width: 1600,
       height: 230,
-      className: "case-preview-card__pill-logo--learvo",
+      className: "case-preview-card__footer-logo--learvo",
     },
   },
   "aws-beginner-mode": {
@@ -65,7 +65,7 @@ export function CaseStudyCard({ study }: CaseStudyCardProps) {
       href={study.href}
       aria-label={`${label}, ${year}: ${description} ${study.metricValue} ${study.metricText}`}
     >
-      <article>
+      <article className="case-preview-card__frame">
         <h2 className="sr-only">{study.title}</h2>
         <div className="case-preview-card__media" aria-hidden="true">
           {preview ? (
@@ -91,35 +91,30 @@ export function CaseStudyCard({ study }: CaseStudyCardProps) {
             </span>
           )}
 
-          <span className="case-preview-card__pill">
+        </div>
+
+        <div className="case-preview-card__footer">
+          <div className="case-preview-card__title-row">
             {preview?.logo ? (
               <Image
-                className={`case-preview-card__pill-logo ${preview.logo.className}`}
+                className={`case-preview-card__footer-logo ${preview.logo.className}`}
                 src={preview.logo.src}
-                alt=""
+                alt={label}
                 width={preview.logo.width}
                 height={preview.logo.height}
               />
             ) : (
               <span>{label}</span>
             )}
-            <span className="case-preview-card__pill-dot" aria-hidden="true">
-              ·
+            <span className="case-preview-card__footer-divider" aria-hidden="true">
+              |
             </span>
             <span className="case-preview-card__year">{year}</span>
-          </span>
-        </div>
-
-        <div className="case-preview-card__hover-content">
+          </div>
           <p className="case-preview-card__description">{description}</p>
           <p className="case-preview-card__stat">
-            <span className="case-preview-card__stat-value">
-              {study.metricValue}
-            </span>
-            {" "}
-            <span className="case-preview-card__stat-text">
-              {study.metricText}
-            </span>
+            <span className="case-preview-card__stat-value">{study.metricValue}</span>{" "}
+            <span className="case-preview-card__stat-text">{study.metricText}</span>
           </p>
         </div>
       </article>

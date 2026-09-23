@@ -16,9 +16,8 @@ export const metadata: Metadata = {
 const timeline = [
   {
     date: "Fall 2026",
-    title: "Incoming Product Design Intern",
+    title: "Product Design Intern",
     place: "Kara",
-    hidden: true,
   },
   {
     date: "Summer 2026",
@@ -372,13 +371,13 @@ export default function AboutPage() {
           <p className="about-card__eyebrow">Experience</p>
           <h2 id="about-background">Where I&apos;ve been</h2>
           <p>
-            Right now, I&apos;m a design intern at Commvault translating complex
-            enterprise product workflows into clearer web visuals that help
-            prospects understand product value capabilities faster.
+            Right now, I’m a Product Design Intern at Kara, redesigning environmental
+            compliance onboarding and evolving the design system to make complex
+            requirements easier to understand and act on.
           </p>
           <p>
-            Meanwhile, I&apos;m pursuing my M.S. in Human-Computer Interaction
-            at SUNY Oswego.
+            Meanwhile, I’m pursuing my M.S. in Human-Computer Interaction at SUNY
+            Oswego, graduating in Spring 2027.
           </p>
           <a
             className="primary-button about-button"
@@ -393,7 +392,7 @@ export default function AboutPage() {
         </div>
 
         <ol className="about-timeline" aria-label="Lauren Johnson timeline">
-          {timeline.filter((item) => !item.hidden).map((item) => (
+          {timeline.map((item) => (
             <li className="about-timeline__item" key={`${item.date}-${item.title}`}>
               <p className="about-timeline__date">{item.date}</p>
               <p className="about-timeline__title">

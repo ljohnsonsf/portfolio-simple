@@ -64,11 +64,11 @@ function toOtherWorkItem(study: CaseStudy): OtherWorkItem {
 }
 
 function OtherWorkItemCard({ item }: { item: OtherWorkItem }) {
-  const pillDetail = item.meta.at(-1) ?? "";
+  const year = item.meta.at(-1) ?? "";
   const label = `${item.title}, ${item.meta.join(", ")}: ${item.description} ${item.tools}`;
 
   const content = (
-    <article>
+    <article className="case-preview-card__frame">
       <h2 className="sr-only">{item.title}</h2>
       <div className="case-preview-card__media" aria-hidden="true">
         <Image
@@ -78,18 +78,18 @@ function OtherWorkItemCard({ item }: { item: OtherWorkItem }) {
           sizes="(max-width: 640px) 100vw, 440px"
         />
 
-        <span className="case-preview-card__pill">
-          <span>{item.title}</span>
-          <span className="case-preview-card__pill-dot" aria-hidden="true">
-            ·
-          </span>
-          <span className="case-preview-card__year">{pillDetail}</span>
-        </span>
       </div>
 
-      <div className="case-preview-card__hover-content">
+      <div className="case-preview-card__footer">
+        <div className="case-preview-card__title-row">
+          <span>{item.title}</span>
+          <span className="case-preview-card__footer-divider" aria-hidden="true">
+            |
+          </span>
+          <span className="case-preview-card__year">{year}</span>
+        </div>
         <p className="case-preview-card__description">{item.description}</p>
-        <p className="case-preview-card__stat">{item.tools}</p>
+        <p className="case-preview-card__tools">{item.tools}</p>
       </div>
     </article>
   );
