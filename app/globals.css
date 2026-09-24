@@ -454,8 +454,9 @@ html[data-theme="dark"] .case-card__visual--image {
 }
 
 .profile-block {
-  display: inline-flex;
-  align-items: center;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: flex-start;
   gap: 24px;
   min-width: 0;
 }
@@ -479,7 +480,8 @@ html[data-theme="dark"] .case-card__visual--image {
 
 .profile-text {
   display: grid;
-  grid-template-rows: 16px 19px;
+  grid-template-rows: 16px 19px auto;
+  min-width: 0;
   align-content: start;
   row-gap: 3px;
   padding-top: 8px;
@@ -534,6 +536,7 @@ html[data-theme="dark"] .case-card__visual--image {
 }
 
 .header-actions {
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   width: auto;
@@ -658,12 +661,86 @@ html[data-theme="dark"] .case-card__visual--image {
 }
 
 .work-section {
-  margin-top: 70px;
+  margin-top: 60px;
   font-family:
     var(--font-primary),
     var(--font-secondary),
     ui-monospace,
     monospace;
+}
+
+.profile-status {
+  grid-column: 1 / -1;
+  font-family: var(--font-primary);
+  margin-top: 9px;
+  color: var(--secondary);
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.8;
+  text-wrap: pretty;
+}
+
+.profile-status__line {
+  display: block;
+  max-width: 100%;
+  white-space: nowrap;
+}
+
+.profile-status {
+  opacity: 1;
+  visibility: visible;
+  max-height: 100px;
+  transition: opacity 240ms ease, visibility 240ms, max-height 240ms ease, margin-top 240ms ease;
+}
+
+.profile-status--hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  max-height: 0;
+  margin-top: 0;
+  overflow: hidden;
+}
+
+.site-header--case-study .profile-block {
+  row-gap: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .profile-status {
+    transition: none;
+  }
+}
+
+.profile-status__separator {
+  padding-inline: 7px;
+  opacity: 0.6;
+}
+
+.profile-status__company {
+  color: #000;
+  transition: color 180ms ease;
+}
+
+.profile-status__company--kara {
+  --company-hover: #8050c4;
+}
+
+.profile-status__company--commvault {
+  --company-hover: #c83983;
+}
+
+.profile-status__company--learvo {
+  --company-hover: #23834b;
+}
+
+.profile-status__company--atlassian {
+  --company-hover: #1868db;
+}
+
+.profile-status__company:hover,
+.profile-status__company:focus-visible {
+  color: var(--company-hover);
 }
 
 .work-tabs {
@@ -2017,6 +2094,7 @@ html[data-theme="dark"] .case-card__logo--learvo {
   display: flex;
   align-items: center;
   gap: 44px;
+  transform: translateX(-12px);
   color: var(--primary);
 }
 
@@ -2340,7 +2418,7 @@ html[data-theme="dark"] .case-study-hero__logo--learvo {
 }
 
 .case-study-meta-bar__item--team dd {
-  max-width: 92px;
+  max-width: 120px;
   white-space: pre-line;
 }
 
@@ -2358,7 +2436,7 @@ html[data-theme="dark"] .case-study-hero__logo--learvo {
   --case-study-frame-half: 448px;
   position: fixed;
   top: 128px;
-  left: max(24px, calc(50vw - var(--case-study-frame-half) - 142px));
+  left: max(24px, calc(50vw - var(--case-study-frame-half) - 174px));
   z-index: 12;
   border-left: 1px solid var(--border-soft);
   padding-left: 18px;
@@ -4811,6 +4889,54 @@ html[data-theme="dark"] .case-study-hero__logo--learvo {
   margin-top: 72px;
 }
 
+.about-introduction {
+  margin: 0 0 20px;
+  grid-template-columns: minmax(0, 1fr) 160px;
+  align-items: center;
+  gap: 16px;
+  text-wrap: pretty;
+}
+
+.about-introduction__copy {
+  display: grid;
+  gap: 18px;
+}
+
+.about-introduction__flower {
+  width: 100%;
+  max-width: 200px;
+  justify-self: center;
+  transform: none;
+}
+
+.about-introduction__flower img {
+  width: 100%;
+  height: auto;
+  filter: grayscale(1);
+}
+
+@media (max-width: 640px) {
+  .about-introduction {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .about-introduction__flower {
+    max-width: 160px;
+    transform: none;
+  }
+}
+
+.about-card.about-introduction h2 {
+  margin: 0;
+  font-family: var(--font-primary);
+}
+
+.about-introduction__body {
+  max-width: 64ch;
+  font-family: var(--font-secondary), sans-serif;
+}
+
 .about-hero {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 310px;
@@ -5582,12 +5708,8 @@ html[data-theme="dark"] .case-study-hero__logo--learvo {
 .about-design-card__summary .about-card__eyebrow,
 .about-values-accordion summary .about-card__eyebrow,
 .about-toolkit summary .about-card__eyebrow {
-  font-family:
-    var(--font-primary),
-    var(--font-secondary),
-    ui-monospace,
-    monospace;
-  font-size: 11px;
+  font-family: var(--font-secondary), sans-serif;
+  font-size: 14px;
   font-weight: var(--font-primary-weight);
 }
 
@@ -5676,7 +5798,7 @@ html[data-theme="dark"] .case-study-hero__logo--learvo {
 .about-going-card {
   gap: 56px;
   margin-top: 34px;
-  padding: 42px 52px 52px;
+  padding: 42px 52px 32px;
 }
 
 .about-going-card__heading h2 {
@@ -5710,7 +5832,6 @@ html[data-theme="dark"] .case-study-hero__logo--learvo {
 
 .about-going-card__column--personal {
   position: relative;
-  min-height: 240px;
   justify-items: center;
 }
 
@@ -5720,7 +5841,7 @@ html[data-theme="dark"] .case-study-hero__logo--learvo {
   width: min(100%, 430px);
   justify-items: center;
   gap: 10px;
-  margin-top: 0;
+  margin-top: -106px;
   text-align: center;
 }
 
@@ -5790,6 +5911,7 @@ html[data-theme="dark"] .case-study-hero__logo--learvo {
 
 .about-going-card__divider {
   position: relative;
+  margin-top: -106px;
   display: grid;
   height: 220px;
   justify-items: center;
@@ -5842,7 +5964,7 @@ html[data-theme="dark"] .case-study-hero__logo--learvo {
   }
 
   .work-section {
-    margin-top: 70px;
+    margin-top: 60px;
   }
 
   .case-card {
@@ -6322,6 +6444,7 @@ html[data-theme="dark"] .case-study-hero__logo--learvo {
   }
 
   .about-going-card__divider {
+    margin-top: 0;
     height: 1px;
     width: 100%;
     justify-items: stretch;

@@ -540,7 +540,13 @@ export function CommvaultCaseStudyPage({
     },
     {
       label: "Role",
-      value: "UX Design Intern",
+      value: (
+        <>
+          UX Design
+          <br />
+          Intern
+        </>
+      ),
     },
     {
       label: "Project Type",
@@ -552,7 +558,7 @@ export function CommvaultCaseStudyPage({
         <>
           Me
           <br />
-          1 Senior Designer
+          <span style={{ whiteSpace: "nowrap" }}>1 Senior Designer</span>
           <br />
           2 Developers
         </>

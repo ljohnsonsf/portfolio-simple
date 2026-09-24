@@ -15,11 +15,13 @@ export type CaseStudy = {
   role: string;
   outcome: string;
   homeSection?: "case-studies" | "other-work";
+  archived?: boolean;
 };
 
 export const caseStudies: CaseStudy[] = [
   {
     slug: "cult-cookies",
+    archived: true,
     number: "04",
     title: "Cult Cookies",
     description:

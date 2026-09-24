@@ -28,10 +28,10 @@ export function WorkSection({ caseStudies }: WorkSectionProps) {
     "other-work": null,
   });
   const selectedCaseStudies = caseStudies.filter(
-    (study) => study.homeSection !== "other-work",
+    (study) => !study.archived && study.homeSection !== "other-work",
   );
   const otherWorkCaseStudies = caseStudies.filter(
-    (study) => study.homeSection === "other-work",
+    (study) => !study.archived && study.homeSection === "other-work",
   );
 
   const switchTab = (nextTab: WorkTab) => {
@@ -137,7 +137,7 @@ export function WorkSection({ caseStudies }: WorkSectionProps) {
           aria-controls="other-work-panel"
           onClick={() => switchTab("other-work")}
         >
-          Other Things I'm Proud Of
+          AI Prototypes
         </button>
       </div>
 

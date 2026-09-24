@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Script from "next/script";
-import { ArrowUpRight, Info } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { DesignJourney } from "@/components/design-journey";
 import { HoverImagePreview } from "@/components/hover-image-preview";
 import { PageReveal } from "@/components/page-reveal";
@@ -31,7 +30,7 @@ const timeline = [
   },
   {
     date: "March 2025 - December 2025",
-    title: "Product Design Mentorship",
+    title: "Product Design Apprenticeship",
     place: "Atlassian",
   },
 ];
@@ -124,207 +123,41 @@ const countryPreviewImages = [
   "/travel-previews/travel-16.png",
 ];
 
-const mentorshipTooltipId = "product-design-mentorship-tooltip";
-const mentorshipTooltipCopy =
-  "An internal product design mentorship completed alongside my Sales Development Representative role.";
-
-const mentorshipTooltipScript = `
-(() => {
-  const root = document.querySelector("[data-about-mentorship-tooltip]");
-
-  if (!root || root.dataset.tooltipReady === "true") {
-    return;
-  }
-
-  root.dataset.tooltipReady = "true";
-
-  const trigger = root.querySelector("[data-about-mentorship-tooltip-trigger]");
-  const tooltip = root.querySelector("[data-about-mentorship-tooltip-panel]");
-
-  if (!(trigger instanceof HTMLButtonElement) || !(tooltip instanceof HTMLElement)) {
-    return;
-  }
-
-  let clickOpen = false;
-  let closeTimer = 0;
-  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  const openTooltip = (isClickOpen = false) => {
-    clickOpen = isClickOpen;
-    window.clearTimeout(closeTimer);
-    tooltip.hidden = false;
-    trigger.setAttribute("aria-expanded", "true");
-    window.requestAnimationFrame(() => {
-      tooltip.dataset.state = "open";
-    });
-  };
-
-  const closeTooltip = () => {
-    clickOpen = false;
-    tooltip.dataset.state = "closed";
-    trigger.setAttribute("aria-expanded", "false");
-
-    if (reducedMotion) {
-      tooltip.hidden = true;
-      return;
-    }
-
-    closeTimer = window.setTimeout(() => {
-      if (tooltip.dataset.state !== "open") {
-        tooltip.hidden = true;
-      }
-    }, 180);
-  };
-
-  trigger.addEventListener("mouseenter", () => openTooltip(false));
-  root.addEventListener("mouseleave", () => {
-    if (!clickOpen && document.activeElement !== trigger) {
-      closeTooltip();
-    }
-  });
-
-  trigger.addEventListener("focus", () => openTooltip(false));
-  root.addEventListener("focusout", () => {
-    window.setTimeout(() => {
-      if (!root.contains(document.activeElement)) {
-        closeTooltip();
-      }
-    }, 0);
-  });
-
-  trigger.addEventListener("click", (event) => {
-    event.preventDefault();
-    event.stopPropagation();
-
-    if (!tooltip.hidden && clickOpen) {
-      closeTooltip();
-      return;
-    }
-
-    openTooltip(true);
-  });
-
-  document.addEventListener("pointerdown", (event) => {
-    const target = event.target;
-
-    if (
-      target instanceof Node &&
-      !root.contains(target) &&
-      !tooltip.contains(target)
-    ) {
-      closeTooltip();
-    }
-  });
-
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && !tooltip.hidden) {
-      closeTooltip();
-      trigger.focus();
-    }
-  });
-
-})();
-`;
-
 export default function AboutPage() {
   return (
     <PageReveal className="page-block about-page">
-      <style>
-        {`
-          .about-mentorship-info {
-            display: inline-flex;
-            position: relative;
-            align-items: baseline;
-            margin-left: 5px;
-            vertical-align: baseline;
-          }
-
-          .about-mentorship-info__trigger {
-            display: inline-grid;
-            height: 18px;
-            width: 18px;
-            place-items: center;
-            border: 1px solid var(--border-soft);
-            border-radius: 999px;
-            background: transparent;
-            color: var(--primary);
-            padding: 0;
-            opacity: 0.62;
-            transform: translateY(3px);
-          }
-
-          .about-mentorship-info__trigger:hover,
-          .about-mentorship-info__trigger[aria-expanded="true"] {
-            opacity: 1;
-          }
-
-          .about-mentorship-info__trigger:focus-visible {
-            outline: 2px solid var(--primary);
-            outline-offset: 3px;
-            opacity: 1;
-          }
-
-          .about-mentorship-info__tooltip {
-            position: absolute;
-            top: 50%;
-            left: calc(100% + 8px);
-            z-index: 120;
-            width: min(248px, calc(100vw - 24px));
-            border: 1px solid var(--border-soft);
-            border-radius: 8px;
-            background: var(--surface);
-            box-shadow:
-              0 16px 38px rgba(48, 48, 48, 0.13),
-              inset 0 1px 0 rgba(255, 255, 255, 0.5);
-            padding: 11px 12px;
-            color: var(--primary);
-            font-size: 12px;
-            font-weight: 400;
-            line-height: 1.38;
-            opacity: 0;
-            pointer-events: none;
-            transform: translate(4px, -50%);
-            transition:
-              opacity 160ms ease,
-              transform 180ms cubic-bezier(0.2, 0.8, 0.2, 1);
-          }
-
-          .about-mentorship-info__tooltip[data-state="open"] {
-            opacity: 1;
-            pointer-events: auto;
-            transform: translate(0, -50%);
-          }
-
-          .about-mentorship-info__tooltip[hidden] {
-            display: none;
-          }
-
-          [data-theme="dark"] .about-mentorship-info__tooltip {
-            box-shadow:
-              0 16px 38px rgba(0, 0, 0, 0.3),
-              inset 0 1px 0 rgba(255, 255, 255, 0.08);
-          }
-
-          @media (max-width: 640px) {
-            .about-mentorship-info__tooltip {
-              top: calc(100% + 8px);
-              left: 0;
-              transform: translateY(4px);
-            }
-
-            .about-mentorship-info__tooltip[data-state="open"] {
-              transform: translateY(0);
-            }
-          }
-
-          @media (prefers-reduced-motion: reduce) {
-            .about-mentorship-info__tooltip {
-              transition: none;
-            }
-          }
-        `}
-      </style>
-      <section className="about-hero" aria-labelledby="about-intro-title">
+      <section className="about-card about-introduction" aria-labelledby="about-introduction-title">
+        <div className="about-introduction__copy">
+        <h2 id="about-introduction-title">Hi, I’m Lauren</h2>
+        <p className="about-introduction__body">
+          I’m a product designer interested in making complex systems feel clear
+          and intuitive.
+          My background spans public health and human-computer interaction, which
+          shaped how I think about human behavior, research, and decision-making.
+          I’m especially drawn to products with complicated workflows, lots of
+          information, and opportunities to bring structure to ambiguity.
+        </p>
+        </div>
+        <HoverImagePreview
+          className="about-introduction__flower"
+          images={flowerPreviewImages}
+          cycleDuration={250}
+        >
+          <Image
+            src="/flower.png"
+            alt="Flower illustration"
+            width={365}
+            height={365}
+          />
+        </HoverImagePreview>
+      </section>
+      {/* Temporarily hidden; remove hidden and the display override to restore. */}
+      <section
+        className="about-hero"
+        aria-labelledby="about-intro-title"
+        hidden
+        style={{ display: "none" }}
+      >
         <div className="about-hero__copy">
           <h1 id="about-intro-title">Hi, I&apos;m Lauren</h1>
           <p>
@@ -372,12 +205,13 @@ export default function AboutPage() {
           <h2 id="about-background">Where I&apos;ve been</h2>
           <p>
             Right now, I’m a Product Design Intern at Kara, redesigning environmental
-            compliance onboarding and evolving the design system to make complex
-            requirements easier to understand and act on.
+            compliance workflows and evolving the design system.
           </p>
           <p>
-            Meanwhile, I’m pursuing my M.S. in Human-Computer Interaction at SUNY
-            Oswego, graduating in Spring 2027.
+            Previously, I’ve worked across enterprise software, education technology,
+            and internal tools at Commvault, Learvo, and Atlassian. Across those
+            experiences, I’ve gravitated toward complex workflows, research-driven
+            decisions, and scalable systems.
           </p>
           <a
             className="primary-button about-button"
@@ -395,36 +229,7 @@ export default function AboutPage() {
           {timeline.map((item) => (
             <li className="about-timeline__item" key={`${item.date}-${item.title}`}>
               <p className="about-timeline__date">{item.date}</p>
-              <p className="about-timeline__title">
-                {item.title}
-                {item.title === "Product Design Mentorship" ? (
-                  <span
-                    className="about-mentorship-info"
-                    data-about-mentorship-tooltip
-                  >
-                    <button
-                      aria-controls={mentorshipTooltipId}
-                      aria-describedby={mentorshipTooltipId}
-                      aria-expanded="false"
-                      aria-label="More information about the Product Design Mentorship."
-                      className="about-mentorship-info__trigger"
-                      data-about-mentorship-tooltip-trigger
-                      type="button"
-                    >
-                      <Info aria-hidden="true" size={12} strokeWidth={2} />
-                    </button>
-                    <span
-                      className="about-mentorship-info__tooltip"
-                      data-about-mentorship-tooltip-panel
-                      hidden
-                      id={mentorshipTooltipId}
-                      role="tooltip"
-                    >
-                      {mentorshipTooltipCopy}
-                    </span>
-                  </span>
-                ) : null}
-              </p>
+              <p className="about-timeline__title">{item.title}</p>
               <p className="about-timeline__place">{item.place}</p>
             </li>
           ))}
@@ -517,12 +322,11 @@ export default function AboutPage() {
           <div className="about-going-card__column">
             <h3>Professionally</h3>
             <p>
-              I&apos;m currently seeking Product Design and UX Design
-              opportunities, including full-time roles, New Grad 2027 roles,
-              and Fall/Winter 2026 internships.
+              I&apos;m currently seeking New Grad 2027 Product Design and UX
+              Design roles or full-time roles.
               <br />
               <br />
-              I&apos;m completing my MS in HCI through Spring 2027.
+              I will be graduating with my M.S. HCI in May 2027.
             </p>
           </div>
 
@@ -558,11 +362,6 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <Script
-        id="about-mentorship-tooltip-script"
-        strategy="afterInteractive"
-        dangerouslySetInnerHTML={{ __html: mentorshipTooltipScript }}
-      />
     </PageReveal>
   );
 }

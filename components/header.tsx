@@ -15,14 +15,12 @@ const navLinks = [
 const typewriterPhrases = [
   "Product Designer",
   "UX Designer",
-  "M.S Human-Computer Interaction",
 ];
 
 const typewriterTiming = {
   hold: 2000,
   type: 80,
   delete: 50,
-  longDelete: 34,
 };
 
 function usePrefersReducedMotion() {
@@ -72,11 +70,6 @@ function TypewriterDetail() {
         typewriterTiming.hold,
       );
     } else if (phase === "deleting") {
-      const deleteSpeed =
-        currentPhrase === "M.S Human-Computer Interaction"
-          ? typewriterTiming.longDelete
-          : typewriterTiming.delete;
-
       timeout = window.setTimeout(() => {
         if (visibleText.length > 0) {
           setVisibleText((text) => text.slice(0, -1));
@@ -85,7 +78,7 @@ function TypewriterDetail() {
 
         setPhraseIndex((index) => (index + 1) % typewriterPhrases.length);
         setPhase("typing");
-      }, deleteSpeed);
+      }, typewriterTiming.delete);
     } else if (phase === "typing") {
       timeout = window.setTimeout(() => {
         if (visibleText.length < currentPhrase.length) {
@@ -112,6 +105,7 @@ function TypewriterDetail() {
 
 export function Header() {
   const pathname = usePathname();
+  const isCaseStudy = /^\/work\/[^/]+\/?$/.test(pathname);
 
   const isActive = (match: string) => {
     if (match === "work") {
@@ -122,7 +116,7 @@ export function Header() {
   };
 
   return (
-    <header className="site-header reveal-on-load reveal-on-load--header">
+    <header className={`site-header reveal-on-load reveal-on-load--header${isCaseStudy ? " site-header--case-study" : ""}`}>
       <div className="profile-block">
         <Link className="avatar" href="/" aria-label="Go to home page">
           <Image
@@ -137,6 +131,54 @@ export function Header() {
           <span className="profile-name">{profile.name}</span>
           <TypewriterDetail />
         </span>
+          <span
+            className={`profile-status${isCaseStudy ? " profile-status--hidden" : ""}`}
+            aria-hidden={isCaseStudy}
+            inert={isCaseStudy}
+          >
+            <span className="profile-status__line">
+              Currently designing at{" "}
+              <a
+                className="profile-status__company profile-status__company--kara"
+                href="https://joinkara.com/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Kara
+              </a>, previously at{" "}
+              <a
+                className="profile-status__company profile-status__company--commvault"
+                href="https://www.commvault.com/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Commvault
+              </a>,{" "}
+              <a
+                className="profile-status__company profile-status__company--learvo"
+                href="https://learvo.com/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Learvo
+              </a>, and{" "}
+              <a
+                className="profile-status__company profile-status__company--atlassian"
+                href="https://www.atlassian.com/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Atlassian
+              </a>
+            </span>
+            <span className="profile-status__line">
+              M.S. HCI
+              <span className="profile-status__separator"> · </span>
+              Spring 2027
+              <span className="profile-status__separator"> · </span>
+              Seeking 2027 full-time product design roles
+            </span>
+          </span>
       </div>
 
       <div className="header-actions">
