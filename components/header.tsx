@@ -105,6 +105,7 @@ function TypewriterDetail() {
 
 export function Header() {
   const pathname = usePathname();
+  const [menuOpen, setMenuOpen] = useState(false);
   const isCaseStudy = /^\/work\/[^/]+\/?$/.test(pathname);
 
   const isActive = (match: string) => {
@@ -181,8 +182,33 @@ export function Header() {
           </span>
       </div>
 
-      <div className="header-actions">
-        <nav className="primary-nav" aria-label="Primary navigation">
+      <div
+        className="header-actions"
+        onKeyDown={(event) => {
+          if (event.key === "Escape") {
+            setMenuOpen(false);
+            event.currentTarget.querySelector("button")?.focus();
+          }
+        }}
+      >
+        <button
+          className="mobile-nav-toggle"
+          type="button"
+          aria-label={menuOpen ? "Close navigation" : "Open navigation"}
+          aria-expanded={menuOpen}
+          aria-controls="primary-navigation"
+          onClick={() => setMenuOpen((open) => !open)}
+        >
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" aria-hidden="true">
+            <path d={menuOpen ? "M6 6l12 12M6 18L18 6" : "M4 6h16M4 12h16M4 18h16"} />
+          </svg>
+        </button>
+        <nav
+          id="primary-navigation"
+          className={`primary-nav${menuOpen ? " primary-nav--open" : ""}`}
+          aria-label="Primary navigation"
+          onClick={() => setMenuOpen(false)}
+        >
           {navLinks.map((link) => {
             const isExternal = link.href.startsWith("http");
             const className = `nav-link ${
