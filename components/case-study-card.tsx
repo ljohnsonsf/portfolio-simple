@@ -22,7 +22,7 @@ const previewVideos: Record<
   }
 > = {
   "commvault-visual-system": {
-    src: "/case-studies/commvault/scalable-visual-system.mp4",
+    src: "/previews/videos/commvault.mp4",
     label: "Commvault",
     year: "2026",
     description: "Built a scalable visual system for complex enterprise products.",
@@ -34,7 +34,7 @@ const previewVideos: Record<
     },
   },
   "learvo-learning": {
-    src: "/case-studies/learvo/learvo-homepage-short.mp4",
+    src: "/previews/videos/learvo.mp4",
     label: "Learvo",
     year: "2025",
     description: "Helping new users discover core features and reach value faster.",
@@ -46,7 +46,7 @@ const previewVideos: Record<
     },
   },
   "aws-beginner-mode": {
-    src: "/case-studies/aws/final-feature-walkthrough.mp4",
+    src: "/previews/videos/aws.mp4",
     label: "AWS",
     year: "2025",
     description: "Making cloud infrastructure setup clearer for first-time users.",
