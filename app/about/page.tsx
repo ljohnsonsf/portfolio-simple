@@ -5,6 +5,11 @@ import { DesignJourney } from "@/components/design-journey";
 import { HoverImagePreview } from "@/components/hover-image-preview";
 import { PageReveal } from "@/components/page-reveal";
 import { profile } from "@/lib/profile";
+import { TravelRobot } from "@/components/travel-robot";
+import { AboutBuildIllustration } from "@/components/about-build-illustration";
+
+// Keep the flower and rollover available to restore later.
+const showAboutFlower = false;
 
 export const metadata: Metadata = {
   title: "Lauren Johnson",
@@ -138,7 +143,7 @@ export default function AboutPage() {
           information, and opportunities to bring structure to ambiguity.
         </p>
         </div>
-        <HoverImagePreview
+        {showAboutFlower ? <HoverImagePreview
           className="about-introduction__flower"
           images={flowerPreviewImages}
           cycleDuration={250}
@@ -149,7 +154,7 @@ export default function AboutPage() {
             width={365}
             height={365}
           />
-        </HoverImagePreview>
+        </HoverImagePreview> : <AboutBuildIllustration />}
       </section>
       {/* Temporarily hidden; remove hidden and the display override to restore. */}
       <section
@@ -347,12 +352,7 @@ export default function AboutPage() {
                 images={countryPreviewImages}
                 cycleDuration={250}
               >
-                <img
-                  src="/about/airplane-window.png"
-                  alt="Line drawing of an airplane wing viewed through a window above clouds."
-                  width={186}
-                  height={266}
-                />
+                <TravelRobot />
               </HoverImagePreview>
               <p className="about-travel-feature__hint">
                 hover to see where I&apos;ve been

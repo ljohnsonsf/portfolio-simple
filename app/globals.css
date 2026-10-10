@@ -446,6 +446,12 @@ html[data-theme="dark"] .case-card__visual--image {
   padding: 68px 0 76px;
 }
 
+@media (min-width: 901px) {
+  .site-frame:has(.work-section) {
+    width: min(1040px, calc(100% - 36px));
+  }
+}
+
 .site-header {
   display: flex;
   align-items: flex-start;
@@ -859,7 +865,7 @@ html[data-theme="dark"] .case-card__visual--image {
   display: grid;
   grid-auto-rows: 1fr;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  column-gap: 26px;
+  column-gap: 20px;
   row-gap: 28px;
   margin-top: 52px;
 }
@@ -5900,8 +5906,7 @@ html[data-theme="dark"] .case-study-hero__logo--learvo {
 }
 
 [data-theme="dark"] .about-travel-feature__window img {
-  filter: invert(1) brightness(1.22);
-  opacity: 0.9;
+  filter: drop-shadow(0 2px 6px rgb(255 255 255 / 0.12));
 }
 
 .about-going-card__column p.about-travel-feature__hint {
@@ -7761,3 +7766,96 @@ html[data-theme="dark"] .case-study-hero__logo--learvo {
 .case-list .case-preview-card__footer {
   grid-template-rows: auto 1fr auto;
 }
+
+/* Profile identity and portfolio introduction. */
+.site-header {
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1fr) auto;
+  gap: 24px;
+}
+.site-header .profile-block { display: contents; }
+.site-header .avatar { grid-column: 1; grid-row: 1; }
+.site-header .profile-text { grid-column: 2; grid-row: 1; }
+.site-header .header-actions { grid-column: 3; grid-row: 1; }
+.site-header .profile-status {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  max-height: none;
+  margin-top: 32px;
+}
+.site-header .profile-status--hidden { display: none; }
+.profile-headline {
+  margin: 0 0 20px;
+  color: var(--primary);
+  font-family: var(--font-primary), ui-monospace, monospace;
+  font-size: clamp(30px, 4vw, 46px);
+  font-weight: var(--font-primary-weight);
+  letter-spacing: normal;
+  line-height: 1.12;
+}
+.site-header .profile-status__line { white-space: normal; }
+.profile-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+.profile-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 12px;
+  border: 1px solid var(--border-soft);
+  border-radius: 999px;
+  color: var(--primary);
+  font-size: 11px;
+  line-height: 1.5;
+  background: var(--surface-muted);
+}
+@media (max-width: 640px) {
+  .site-header { grid-template-columns: 68px minmax(0, 1fr); gap: 24px 18px; }
+  .site-header .profile-status { margin-top: 20px; text-align: left; }
+  .profile-headline { font-size: clamp(28px, 7vw, 38px); margin-bottom: 16px; }
+  .site-header .profile-status__line { font-size: 13px; line-height: 1.85; }
+  .profile-pills { margin-top: 18px; }
+}
+
+.site-header .profile-detail { font-family: var(--font-primary), ui-monospace, monospace; }
+
+.profile-pill { gap: 7px; }
+.profile-pill .status-dot { flex-shrink: 0; }
+
+/* About introduction: text and a quiet design-to-build illustration. */
+.about-card.about-introduction {
+  grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr);
+  gap: 32px;
+  padding: 30px;
+}
+.about-build { min-width: 0; border-left: 1px solid var(--border-soft); padding-left: 28px; }
+.about-build__scene { position: relative; width: 100%; height: 230px; color: var(--primary); }
+.about-build__code {
+  position: absolute; top: 20px; left: 0; width: 62%; height: 185px;
+  padding: 14px; border-radius: 12px; background: var(--surface-muted); opacity: 0.65;
+}
+.about-build__dots { display: flex; gap: 5px; }
+.about-build__dots i { display: block; width: 6px; height: 6px; border-radius: 50%; background: var(--secondary); opacity: 0.55; }
+.about-build__code pre { margin: 18px 0 0; font-family: var(--font-primary); font-size: 9px; line-height: 1.65; white-space: pre; }
+.about-build__browser { position: absolute; right: 0; top: 8px; width: 48%; height: 185px; border: 1px solid var(--border-soft); border-radius: 10px; opacity: 0.45; overflow: hidden; }
+.about-build__browser-bar { padding: 8px; border-bottom: 1px solid var(--border-soft); }
+.about-build__browser-bar i { width: 4px; height: 4px; }
+.about-build__mock-profile { display: flex; align-items: center; gap: 8px; padding: 12px; }
+.about-build__mock-profile > span { width: 24px; height: 24px; border-radius: 50%; background: var(--border-soft); }
+.about-build__mock-profile > div { flex: 1; }
+.about-build__mock-profile i, .about-build__mock-lines i { display: block; height: 3px; margin: 6px 0; background: var(--border-soft); border-radius: 3px; }
+.about-build__mock-profile i:last-child { width: 65%; }
+.about-build__mock-image { margin: 0 12px; height: 64px; display: grid; place-items: center; background: var(--surface-muted); color: var(--secondary); border-radius: 3px; }
+.about-build__mock-lines { padding: 4px 12px; }
+.about-build__mock-lines i:last-child { width: 65%; }
+.about-build__process { position: absolute; right: 10%; bottom: 8px; width: 85%; display: flex; align-items: flex-start; justify-content: space-between; gap: 3px; padding: 20px 12px 16px; border: 1px solid var(--border-soft); border-radius: 14px; background: var(--background); box-shadow: 0 10px 25px var(--hover-shadow); }
+.about-build__process > div { display: grid; justify-items: center; gap: 10px; }
+.about-build__process > div > span { display: grid; place-items: center; width: 48px; height: 48px; border: 1px solid var(--border-soft); border-radius: 50%; background: var(--surface-muted); }
+.about-card .about-build__process p { margin: 0; font-family: var(--font-primary); font-size: 10px; line-height: 1.3; }
+.about-build__arrow { flex-shrink: 0; margin-top: 14px; color: var(--secondary); }
+@media (max-width: 800px) {
+  .about-card.about-introduction { grid-template-columns: 1fr; gap: 24px; padding: 24px; }
+  .about-build { border-left: 0; border-top: 1px solid var(--border-soft); padding: 20px 0 0; }
+  .about-build__scene { max-width: 390px; margin-inline: auto; }
+}
+
+.about-build__artwork { position: relative; width: 100%; aspect-ratio: 1.85; overflow: hidden; }
+.about-build__artwork img { object-fit: cover; object-position: center 48%; mix-blend-mode: multiply; }
+[data-theme="dark"] .about-build__artwork img { mix-blend-mode: normal; border-radius: 10px; }

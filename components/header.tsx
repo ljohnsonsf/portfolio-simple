@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { profile } from "@/lib/profile";
 
 const navLinks = [
@@ -11,97 +11,6 @@ const navLinks = [
   { href: "/about", label: "About", match: "about" },
   { href: profile.resumeUrl, label: "Resume", match: "resume" },
 ];
-
-const typewriterPhrases = [
-  "Product Designer",
-  "UX Designer",
-];
-
-const typewriterTiming = {
-  hold: 2000,
-  type: 80,
-  delete: 50,
-};
-
-function usePrefersReducedMotion() {
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
-
-  useEffect(() => {
-    const query = window.matchMedia("(prefers-reduced-motion: reduce)");
-
-    setPrefersReducedMotion(query.matches);
-
-    const handleChange = () => {
-      setPrefersReducedMotion(query.matches);
-    };
-
-    query.addEventListener("change", handleChange);
-
-    return () => {
-      query.removeEventListener("change", handleChange);
-    };
-  }, []);
-
-  return prefersReducedMotion;
-}
-
-function TypewriterDetail() {
-  const prefersReducedMotion = usePrefersReducedMotion();
-  const [phraseIndex, setPhraseIndex] = useState(0);
-  const [visibleText, setVisibleText] = useState(typewriterPhrases[0]);
-  const [phase, setPhase] = useState<"holding" | "typing" | "deleting">(
-    "holding",
-  );
-
-  useEffect(() => {
-    if (prefersReducedMotion) {
-      setVisibleText(typewriterPhrases[0]);
-      setPhraseIndex(0);
-      setPhase("holding");
-      return;
-    }
-
-    const currentPhrase = typewriterPhrases[phraseIndex];
-    let timeout = typewriterTiming.hold;
-
-    if (phase === "holding") {
-      timeout = window.setTimeout(
-        () => setPhase("deleting"),
-        typewriterTiming.hold,
-      );
-    } else if (phase === "deleting") {
-      timeout = window.setTimeout(() => {
-        if (visibleText.length > 0) {
-          setVisibleText((text) => text.slice(0, -1));
-          return;
-        }
-
-        setPhraseIndex((index) => (index + 1) % typewriterPhrases.length);
-        setPhase("typing");
-      }, typewriterTiming.delete);
-    } else if (phase === "typing") {
-      timeout = window.setTimeout(() => {
-        if (visibleText.length < currentPhrase.length) {
-          setVisibleText(currentPhrase.slice(0, visibleText.length + 1));
-          return;
-        }
-
-        setPhase("holding");
-      }, typewriterTiming.type);
-    }
-
-    return () => {
-      window.clearTimeout(timeout);
-    };
-  }, [phase, phraseIndex, prefersReducedMotion, visibleText]);
-
-  return (
-    <span className="profile-detail profile-typewriter">
-      <span className="profile-typewriter__text">{visibleText}</span>
-      <span className="profile-typewriter__cursor" aria-hidden="true" />
-    </span>
-  );
-}
 
 export function Header() {
   const pathname = usePathname();
@@ -130,13 +39,14 @@ export function Header() {
         </Link>
         <span className="profile-text">
           <span className="profile-name">{profile.name}</span>
-          <TypewriterDetail />
+          <span className="profile-detail">Product Designer</span>
         </span>
-          <span
+          <div
             className={`profile-status${isCaseStudy ? " profile-status--hidden" : ""}`}
             aria-hidden={isCaseStudy}
             inert={isCaseStudy}
           >
+            <h1 className="profile-headline">A designer who builds.</h1>
             <span className="profile-status__line">
               Currently designing at{" "}
               <a
@@ -172,14 +82,11 @@ export function Header() {
                 Atlassian
               </a>
             </span>
-            <span className="profile-status__line">
-              M.S. HCI
-              <span className="profile-status__separator"> · </span>
-              Spring 2027
-              <span className="profile-status__separator"> · </span>
-              Seeking 2027 full-time product design roles
-            </span>
-          </span>
+            <div className="profile-pills" aria-label="Education">
+              <span className="profile-pill">M.S. in HCI, Spring 2027</span>
+              <span className="profile-pill"><span className="status-dot" aria-hidden="true" />Open to 2027 New Grad Opportunities</span>
+            </div>
+          </div>
       </div>
 
       <div

@@ -1,0 +1,28 @@
+.robot {
+  display: block;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1.2;
+}
+
+.robot .frame {
+  position: absolute;
+  max-width: none;
+  image-rendering: pixelated;
+  animation: walking-frame 2s steps(1, end) infinite;
+}
+
+.robot .frame:nth-child(2) {
+  animation-delay: -1s;
+}
+
+@keyframes walking-frame {
+  0% { opacity: 1; }
+  50% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .robot .frame { animation: none; }
+  .robot .frame:nth-child(2) { opacity: 0; }
+}
