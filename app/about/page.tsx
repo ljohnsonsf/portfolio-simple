@@ -6,7 +6,6 @@ import { HoverImagePreview } from "@/components/hover-image-preview";
 import { PageReveal } from "@/components/page-reveal";
 import { profile } from "@/lib/profile";
 import { TravelRobot } from "@/components/travel-robot";
-import { AboutBuildIllustration } from "@/components/about-build-illustration";
 
 // Keep the flower and rollover available to restore later.
 const showAboutFlower = false;
@@ -19,12 +18,12 @@ export const metadata: Metadata = {
 
 const timeline = [
   {
-    date: "Fall 2026",
+    date: "September 2026 - Present",
     title: "Product Design Intern",
     place: "Kara",
   },
   {
-    date: "Summer 2026",
+    date: "May 2026 - October 2026",
     title: "UX Design Intern",
     place: "Commvault",
   },
@@ -135,15 +134,15 @@ export default function AboutPage() {
         <div className="about-introduction__copy">
         <h2 id="about-introduction-title">Hi, I’m Lauren</h2>
         <p className="about-introduction__body">
-          I’m a product designer interested in making complex systems feel clear
-          and intuitive.
-          My background spans public health and human-computer interaction, which
-          shaped how I think about human behavior, research, and decision-making.
-          I’m especially drawn to products with complicated workflows, lots of
-          information, and opportunities to bring structure to ambiguity.
+          I’m a product designer who loves making complex systems feel <strong>clear</strong> and <strong>intuitive</strong>.
+          My background in tech sales and human-computer interaction
+          shapes how I approach research, human behavior, and problem-solving.
+          I’m especially drawn to complicated workflows and information-heavy
+          products, and I enjoy bringing my designs to life with <strong>React</strong>, <strong>Next.js</strong>,
+          and <strong>AI-assisted</strong> development tools.
         </p>
         </div>
-        {showAboutFlower ? <HoverImagePreview
+        {showAboutFlower && <HoverImagePreview
           className="about-introduction__flower"
           images={flowerPreviewImages}
           cycleDuration={250}
@@ -154,7 +153,7 @@ export default function AboutPage() {
             width={365}
             height={365}
           />
-        </HoverImagePreview> : <AboutBuildIllustration />}
+        </HoverImagePreview>}
       </section>
       {/* Temporarily hidden; remove hidden and the display override to restore. */}
       <section

@@ -4943,7 +4943,7 @@ html[data-theme="dark"] .case-study-hero__logo--learvo {
 }
 
 .about-introduction__body {
-  max-width: 64ch;
+  max-width: none;
   font-family: var(--font-secondary), sans-serif;
 }
 
@@ -7775,7 +7775,13 @@ html[data-theme="dark"] .case-study-hero__logo--learvo {
 }
 .site-header .profile-block { display: contents; }
 .site-header .avatar { grid-column: 1; grid-row: 1; }
-.site-header .profile-text { grid-column: 2; grid-row: 1; }
+.site-header .profile-text {
+  grid-column: 2;
+  grid-row: 1;
+  align-self: center;
+  grid-template-rows: auto auto;
+  padding-top: 0;
+}
 .site-header .header-actions { grid-column: 3; grid-row: 1; }
 .site-header .profile-status {
   grid-column: 1 / -1;
@@ -7808,10 +7814,10 @@ html[data-theme="dark"] .case-study-hero__logo--learvo {
 }
 @media (max-width: 640px) {
   .site-header { grid-template-columns: 68px minmax(0, 1fr); gap: 24px 18px; }
-  .site-header .profile-status { margin-top: 20px; text-align: left; }
+  .site-header .profile-status { margin-top: 20px; text-align: center; }
   .profile-headline { font-size: clamp(28px, 7vw, 38px); margin-bottom: 16px; }
   .site-header .profile-status__line { font-size: 13px; line-height: 1.85; }
-  .profile-pills { margin-top: 18px; }
+  .profile-pills { margin-top: 18px; justify-content: center; }
 }
 
 .site-header .profile-detail { font-family: var(--font-primary), ui-monospace, monospace; }
@@ -7819,9 +7825,9 @@ html[data-theme="dark"] .case-study-hero__logo--learvo {
 .profile-pill { gap: 7px; }
 .profile-pill .status-dot { flex-shrink: 0; }
 
-/* About introduction: text and a quiet design-to-build illustration. */
+/* About introduction. */
 .about-card.about-introduction {
-  grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr);
   gap: 32px;
   padding: 30px;
 }
